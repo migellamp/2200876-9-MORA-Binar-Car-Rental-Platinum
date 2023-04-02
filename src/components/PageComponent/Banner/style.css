@@ -1,0 +1,78 @@
+.container-banner-all{
+    background-color: #F1F3FF;
+  }
+  
+.container-isi-banner{
+    width: 1440px;
+    margin: 0 auto !important; 
+    float: none !important; 
+}
+
+.bg-mobil.col{
+    --bs-gutter-x: 0;
+}
+.container-text.col{
+    --bs-gutter-x: 0;
+    padding-left: 136px;
+}
+.bg-mobil{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+.text-mobil{
+    font-size: bold;
+    margin-bottom: 16px;
+    margin-top: 32px;
+}
+.img-mobil{
+    width: 704px;
+}
+.sewa-button{
+    background-color: #5CB85F;
+    color: white;
+    font-weight: bold;
+    border: #5CB85F;
+    padding-top: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-bottom: 8px;
+    /* border-radius: 2px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 20px;
+    color: white; */
+}
+
+
+@media screen and (max-width:1000px){
+    .text-mobil{
+        padding-left: 0px;
+        padding-right: 16px;
+        margin-top: -10px;
+    }
+    .img-mobil{
+        width: 340px;
+    }
+    .container-text.col{
+        --bs-gutter-x: 0;
+        padding-left: 16px;
+    }
+    .bg-mobil.col{
+        --bs-gutter-x: 0rem;
+    }
+    .bg-mobil{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+    .container-isi-banner{
+        width: 100%;
+        
+    }    
+    .sewa-button{
+        margin-bottom: 24px;
+    }
+}

@@ -1,0 +1,23 @@
+.input-form{
+    width: 208px;
+    padding: 9px 12px 9px 12px !important;
+    border: 1px solid #CCCCCC;
+    border-radius: 2px ;
+    font-size: 12px;
+}
+
+.label-input-form{
+    /* font-family: 'Rubik'; */
+    font-style: normal;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 18px;
+    color: #370b0b;
+}
+
+.wrapper-input-form{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start;
+}

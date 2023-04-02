@@ -1,0 +1,61 @@
+
+.container-whyus{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-wrapper{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+}
+.isi-card{
+  border: 1px solid #D0D0D0;
+  border-radius: 8px;
+  padding: 24px;
+  width: 268px;
+  height: 196px;
+  float: left;
+}
+
+@media screen and (max-width:1000px){
+    body{
+        width: 100%;
+        overflow-x:hidden;
+    }
+
+    .card-wrapper{
+      gap: 0px;
+    }
+    .container-card{
+        width: 100%;
+        padding-left: 16px;
+        padding-right: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .isi-card{
+        width: 328px;
+        height: 196px;
+
+    }
+    .text-whyus{
+        text-align: center;
+    }
+    .text-whyus h1{
+      font-size: 24px;
+    }
+    .isi-card h5{
+      font-size: 16px;
+    }
+    .isi-card h6{
+      font-size: 14px;
+    }
+    
+  }
