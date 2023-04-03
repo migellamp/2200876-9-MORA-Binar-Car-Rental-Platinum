@@ -1,5 +1,7 @@
 # Getting Started with Create React App
 
+![alt text](https://github.com/migellamp/challenge-binar-car-rental-react/blob/main/images/landingpage.png)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
