@@ -1,8 +1,20 @@
+import { useContext } from 'react';
 import '../InputForm/style.css'
+import { SearchedCarContext } from '../../../context/searchedCar';
 
-const SearchFormInput = ({labelName, callState, defaultValue, disabled, id,widthStyle}) =>{
+const SearchFormInput = ({labelName, defaultValue, disabled, id,widthStyle}) =>{
+    const { searchedCar, setSearchedCar } = useContext(SearchedCarContext)
+    const { kategori, harga, status} = searchedCar || {}
+    
+
     const getValue = (e) => {
-        callState(e.target.value);
+        const SearchedCarState = {
+            namaMobil: e.target.value,
+            kategori: kategori,
+            harga: harga,
+            status: status,
+        }
+        setSearchedCar(SearchedCarState);
     }
     return (
         <div className="form-group wrapper-input-form">
