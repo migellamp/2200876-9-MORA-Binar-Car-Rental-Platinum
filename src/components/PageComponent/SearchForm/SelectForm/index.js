@@ -1,9 +1,39 @@
 import '../SelectForm/style.css'
+import { SearchedCarContext } from '../../../context/searchedCar'
+import { useContext } from 'react'
 
+const SelectFormInput = ({labelName, arrayList, selected, id, disabled, widthStyle}) =>{
+    const { searchedCar, setSearchedCar } = useContext(SearchedCarContext)
+    const { namaMobil, kategori, harga, status} = searchedCar || {}
 
-const SelectFormInput = ({labelName, callState, arrayList, selected, id, disabled, widthStyle}) =>{
     const getValue = (e) => {
-        callState(e.target.value);
+        if(labelName === "Kategori"){
+            const SearchedCarState = {
+                namaMobil: namaMobil,
+                kategori: e.target.value,
+                harga: harga,
+                status: status,
+            }
+            setSearchedCar(SearchedCarState);
+        }
+        if(labelName === "Status"){
+            const SearchedCarState = {
+                namaMobil: namaMobil,
+                kategori: kategori,
+                harga: harga,
+                status: e.target.value,
+            }
+            setSearchedCar(SearchedCarState);
+        }
+        if(labelName === "Harga"){
+            const SearchedCarState = {
+                namaMobil: namaMobil,
+                kategori: kategori,
+                harga: e.target.value,
+                status: status,
+            }
+            setSearchedCar(SearchedCarState);
+        }
     }
     return (
         <div className="form-group wrapper-input-form">

@@ -14,23 +14,23 @@ import { Link } from "react-router-dom"
 import Footer from '../../PageComponent/Footer/index'
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
+import { useContext } from "react"
+import { SearchedCarContext } from "../../context/searchedCar"
 
 
 
-const SearchFrameSolo = ({name, status, price, category}) => {
+const SearchFrameSolo = ({name, carStatus, price, category}) => {
     // category -> '2-4 orang'
     // status -> 'Disewakan
     // price -> '>600000'
     const [state, setState] = useState([]);
-    const [carNameState, setCarName] = useState(name)
-    const [categoryState, setCategory] = useState(category)
-    const [priceState, setPrice] = useState(price)
-    const [statusState, setStatus] = useState(status)
     const [nullData, setNullData] = useState(false)
     const [loading, setLoading] = useState(false);
+    const { searchedCar } = useContext(SearchedCarContext)
+    const { namaMobil, kategori, harga, status} = searchedCar || {}
 
     let min, max,categories,isRented;
-    let minNew, maxNew;
+    let minNew, maxNew, newCat, newStat;
 
     if(category === "2 - 4 orang"){
         categories = "small"}
@@ -39,9 +39,9 @@ const SearchFrameSolo = ({name, status, price, category}) => {
     else if(category  === "6 - 8 orang"){
         categories = "large"}
 
-    if(status === "Disewakan"){
+    if(carStatus === "Disewakan"){
         isRented = "false";}
-    else if(status === "Kosong"){
+    else if(carStatus === "Kosong"){
         isRented = "true";}
 
     if(price === "> Rp.600.000"){
@@ -63,32 +63,11 @@ const SearchFrameSolo = ({name, status, price, category}) => {
     useEffect(() => {
         document.getElementById('category-select').value = category;
         document.getElementById('price-select').value = price;
-        document.getElementById('status-select').value = status;
+        document.getElementById('status-select').value = carStatus;
         getCarList();
         // eslint-disable-next-line 
     },[]);    
 
-    if(priceState === "> Rp.600.000"){
-        minNew = "600000";
-        maxNew = "10000000";}
-    else if (priceState === "< Rp.400.000"){
-        minNew = "0";
-        maxNew = "400000";}
-    else if (priceState === "Rp.400.000 - Rp.600.000"){
-        minNew = "400000";
-        maxNew = "600000";}
-
-    if(statusState === "Disewakan"){
-        setStatus("false")}
-    else if(statusState === "Kosong"){
-        setStatus("true")}
-
-    if(categoryState === "2 - 4 orang"){
-        setCategory("small")}
-    else if(categoryState === "4 - 6 orang"){
-        setCategory("medium")}
-    else if(categoryState  === "6 - 8 orang"){
-        setCategory("large")}
     // useEffect(()=>{
     //     setCarName(name);
     //     setCategory(category);
@@ -136,35 +115,50 @@ const SearchFrameSolo = ({name, status, price, category}) => {
         currency: 'IDR'
     }).format(value);
 
+    if(harga === "> Rp.600.000"){
+        minNew = "600000";
+        maxNew = "10000000";}
+    else if (harga === "< Rp.400.000"){
+        minNew = "0";
+        maxNew = "400000";}
+    else if (harga === "Rp.400.000 - Rp.600.000"){
+        minNew = "400000";
+        maxNew = "600000";}
+
+    if(status === "Disewakan"){
+        newStat="false"}
+    else if(status === "Kosong"){
+        newStat="true"}
+
+    if(kategori === "2 - 4 orang"){
+        newCat="small"}
+    else if(kategori === "4 - 6 orang"){
+        newCat="medium"}
+    else if(kategori  === "6 - 8 orang"){
+        newCat="large"}
+
     return (
         <>
         <Navbar/>
         <div className="background-only"></div>
-        {/* <h6 className="search-title-search-frame" style={
-                {
-                    position:"absolute",
-                    left:0,
-                    top:210,
-                    zIndex:1
-                }
-            }>Pencarianmu</h6> */}
+
         <div className="form">
             <div className="form-container form-container-search-frame" style={{top: 195, height:130, paddingTop:20}}>
                 <div className="form-wrapper form-wrapper-search-frame">
-                    <SearchFormInput labelName="Nama Mobil" callState={setCarName} defaultValue={carNameState} id="car-select" disabled/>
-                    <SelectFormInput labelName="Kategori" callState={setCategory} arrayList={categoryList} id="category-select" value={categoryState} disabled/>
-                    <SelectFormInput labelName="Harga" callState={setPrice} arrayList={priceList} id="price-select" value={priceState} disabled/>
-                    <SelectFormInput labelName="Status" callState={setStatus} arrayList={statusList} id="status-select" value={statusState} disabled/>
+                    <SearchFormInput labelName="Nama Mobil" defaultValue={namaMobil} id="car-select" disabled/>
+                    <SelectFormInput labelName="Kategori"  arrayList={categoryList} id="category-select" value={kategori} disabled/>
+                    <SelectFormInput labelName="Harga" arrayList={priceList} id="price-select" value={harga} disabled/>
+                    <SelectFormInput labelName="Status" arrayList={statusList} id="status-select" value={status} disabled/>
                     <span className="button-container">
                     {
                         nullData ? (
-                            <Link to={`/car-result/?name=${carNameState}&isRented=${status}&price=${priceState}&category=${categoryState}`} style={{textDecoration: "none"}}>
+                            <Link to={`/car-result/?name=${namaMobil}&isRented=${status}&price=${harga}&category=${kategori}`} style={{textDecoration: "none"}}>
                             <Button
                                 color="primary"
                                 onClick={
                                     ()=>{
-                                        CallApi(`${process.env.REACT_APP_BASEURL}/customer/v2/car?name=${carNameState}&category=${categoryState}&isRented=${statusState}&minPrice=${minNew}&maxPrice=${maxNew}&page1=&pageSize=10`)
-                                        console.log(`${process.env.REACT_APP_BASEURL}/customer/v2/car?name=${carNameState}&category=${categoryState}&isRented=${statusState}&minPrice=${minNew}&maxPrice=${maxNew}&page1=&pageSize=10`)
+                                        CallApi(`${process.env.REACT_APP_BASEURL}/customer/v2/car?name=${namaMobil}&category=${newCat}&isRented=${newStat}&minPrice=${minNew}&maxPrice=${maxNew}&page1=&pageSize=10`)
+                                        console.log(`${process.env.REACT_APP_BASEURL}/customer/v2/car?name=${namaMobil}&category=${newCat}&isRented=${newStat}&minPrice=${minNew}&maxPrice=${maxNew}&page1=&pageSize=10`)
                                     }
                                 }
                                 type="button"
