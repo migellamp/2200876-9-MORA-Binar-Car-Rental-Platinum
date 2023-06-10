@@ -4,7 +4,7 @@ import {
   } from "react-router-dom";
 import SearchFormInput from "../../../components/PageComponent/SearchForm/InputForm"
 import SelectFormInput from "../../PageComponent/SearchForm/SelectForm"
-import { useMemo } from "react";
+import { useContext, useMemo } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
@@ -12,10 +12,14 @@ import userIcon from '../../../image/icon_users.png'
 import { categoryList, priceList, statusList } from "../../PageComponent/SearchForm/constanta"
 import Footer from '../../PageComponent/Footer/index'
 import '../CarDetailsPage/style.css'
-
+import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { SearchedCarContext } from "../../context/searchedCar";
 
 
 const CarDetails = () => {
+    const { searchedCar, setSearchedCar } = useContext(SearchedCarContext)
+    console.log({searchedCar})
     const [carId, setCarId] = useState({})
 
     let query = useQuery();
@@ -29,6 +33,19 @@ const CarDetails = () => {
     const getCarList = async() => {
         const cars = await (await axios.get(`${process.env.REACT_APP_BASEURL}/customer/car/${id}`)) 
         setCarId(cars.data)
+    }
+
+    const buttonHandler = () => {
+        if (carId){
+            const SearchedCarState = {
+                namaMobil: carId.name,
+                kategori: carId.category,
+                harga: carId.price,
+                status: carId.status,
+            }
+            setSearchedCar(SearchedCarState)
+        }
+        console.log({searchedCar})
     }
 
     useEffect(() => {
@@ -139,6 +156,8 @@ const CarDetails = () => {
                         <span><h6 style={{display:"inline-block"}}>Total</h6></span>
                         <span><h6 style={{float:"right"}}>{numberFormat(carId.price)}</h6></span>
                     </div>
+                    <Link to={('/payments')}><Button onClick={buttonHandler}>Lanjut Bayar</Button></Link>
+                    <p>button buat testing(hapus gpp)</p>
                     {/* <Link to={('/search')}><button className="btn btn-success">Back</button></Link>
                     <Link to={('/search')}><button style={{float:"right"}} className="btn btn-success">Checkout</button></Link> */}
                 </div>

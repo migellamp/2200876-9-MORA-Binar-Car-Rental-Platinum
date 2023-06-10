@@ -1,0 +1,66 @@
+.payment-head-item{ 
+    width: 240.25px;
+    height: 48px;
+}
+.payment-form-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 24px;
+}
+.detailPesananmu-text{
+    padding-left: 24px;
+    margin-bottom: 8px;
+}
+.payment-method-list{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.wrapper-description-car{
+    padding-left: 24px;
+}
+.buttonPayMethod{
+    background-color: white;
+    border: none;
+    width: 555px;
+    border-bottom: 1px solid #D0D0D0;
+    padding-bottom: 16px;
+    padding-top: 16px;
+    margin-bottom: 10px;
+}
+
+.payment-body-button{
+    display: flex;
+    flex-direction: row;    
+    align-items: center;
+}
+
+.payment-body-button h6{
+    font-family: 'Arial';   
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.firstItem{
+    padding: 6px 16px;
+    border: 1px solid #D0D0D0;
+    border-radius: 4px;
+    width: 61px;
+}
+
+.firstItemMandiri{
+    border: 1px solid #D0D0D0;
+    border-radius: 4px;
+    width: 61px;
+    padding: 6px;
+}
+
+.secItem{
+    width: 400px;
+    height: 18px;
+    text-align: start;
+    padding-left: 16px;
+}
