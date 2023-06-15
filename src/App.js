@@ -1,3 +1,4 @@
+import * as React from "react";
 import LandingPage from "./components/Pages/LandingPage/LandingPage";
 import SearchCarPage from "./components/Pages/SearchCar/SearchCarPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -9,15 +10,15 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LandingPage/>} />
-        <Route path="/search" element={<SearchCarPage/>} />
-        <Route path="/car-result" element={<CarResult/>} />
-        <Route path="/car-details" element={<CarDetails/>}/>
-        <Route path="/payments" element={<PaymentPage/>}/>
-        <Route/>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/search" element={<SearchCarPage />} />
+        <Route path="/car-result" element={<CarResult />} />
+        <Route path="/car-details" element={<CarDetails />} />
+        <Route path="/payments" element={<PaymentPage />} />
+        <Route />
       </Routes>
     </Router>
   );
-}
+};
 
-export default App
+export default App;
