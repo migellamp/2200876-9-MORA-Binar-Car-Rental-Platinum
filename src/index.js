@@ -1,15 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import reportWebVitals from './reportWebVitals';
-import App from './App'
-import SearchedCarProvider from './components/context/searchedCar';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
+import App from "./App";
+import SearchedCarProvider from "./components/context/searchedCar";
+import SelectPaymentProvider from "./components/context/paymentMethod";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <SearchedCarProvider>
-      <App />
+      <SelectPaymentProvider>
+        <App />
+      </SelectPaymentProvider>
     </SearchedCarProvider>
   </React.StrictMode>
 );
