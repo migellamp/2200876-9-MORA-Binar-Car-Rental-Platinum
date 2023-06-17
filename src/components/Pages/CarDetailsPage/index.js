@@ -20,8 +20,7 @@ import { Link } from "react-router-dom";
 import { SearchedCarContext } from "../../context/searchedCar";
 
 const CarDetails = () => {
-  const { searchedCar, setSearchedCar } = useContext(SearchedCarContext);
-  console.log({ searchedCar });
+  const { setSearchedCar } = useContext(SearchedCarContext);
   const [carId, setCarId] = useState({});
 
   let query = useQuery();
@@ -36,6 +35,7 @@ const CarDetails = () => {
     const cars = await await axios.get(
       `${process.env.REACT_APP_BASEURL}/customer/car/${id}`
     );
+    console.log(cars.data);
     setCarId(cars.data);
   };
 
@@ -49,7 +49,6 @@ const CarDetails = () => {
       };
       setSearchedCar(SearchedCarState);
     }
-    console.log({ searchedCar });
   };
 
   useEffect(() => {
@@ -212,7 +211,7 @@ const CarDetails = () => {
                 <h6 style={{ float: "right" }}>{numberFormat(carId.price)}</h6>
               </span>
             </div>
-            <Link to={"/payments"}>
+            <Link to={`/payments?idCar=${carId.id}`}>
               <Button onClick={buttonHandler}>Lanjut Bayar</Button>
             </Link>
             <p>button buat testing(hapus gpp)</p>

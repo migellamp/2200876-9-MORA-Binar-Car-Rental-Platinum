@@ -6,8 +6,10 @@ import node from "prop-types";
 export const SelectPaymentContext = createContext(null);
 
 const SelectPaymentProvider = ({ children }) => {
+  const selectedPaymentMethod = sessionStorage.getItem("selectedPayment");
+  const selectedPayment = JSON.parse(selectedPaymentMethod);
   const PaymentState = {
-    method: "",
+    method: { selectedPayment },
   };
   const [payment, setPayment] = useState(PaymentState);
   const obj = {

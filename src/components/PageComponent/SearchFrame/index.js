@@ -64,9 +64,6 @@ const SearchFrameSolo = ({ name, carStatus, price, category }) => {
     const cars = await await axios.get(
       `${process.env.REACT_APP_BASEURL}/customer/v2/car?name=${name}&category=${categories}&isRented=${isRented}&minPrice=${min}&maxPrice=${max}&page1=&pageSize=10`
     );
-    console.log(
-      `${process.env.REACT_APP_BASEURL}/customer/v2/car?name=${name}&category=${categories}&isRented=${isRented}&minPrice=${min}&maxPrice=${max}&page1=&pageSize=10`
-    );
     setState(cars.data.cars);
   };
 
@@ -198,9 +195,6 @@ const SearchFrameSolo = ({ name, carStatus, price, category }) => {
                     color="primary"
                     onClick={() => {
                       CallApi(
-                        `${process.env.REACT_APP_BASEURL}/customer/v2/car?name=${namaMobil}&category=${newCat}&isRented=${newStat}&minPrice=${minNew}&maxPrice=${maxNew}&page1=&pageSize=10`
-                      );
-                      console.log(
                         `${process.env.REACT_APP_BASEURL}/customer/v2/car?name=${namaMobil}&category=${newCat}&isRented=${newStat}&minPrice=${minNew}&maxPrice=${maxNew}&page1=&pageSize=10`
                       );
                     }}

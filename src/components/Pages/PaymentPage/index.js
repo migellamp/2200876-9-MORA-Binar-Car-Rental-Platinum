@@ -3,12 +3,14 @@ import Navbar from "../../PageComponent/Navbar";
 import userIcon from "../../../image/icon_users.png";
 import Footer from "../../PageComponent/Footer/index";
 import "../CarDetailsPage/style.css";
-import { useContext, useState } from "react";
-import { SearchedCarContext } from "../../context/searchedCar";
+import { useState } from "react";
 import "./style.css";
 import { useNavigate } from "react-router-dom";
 import FinishPayment from "./FinishPayment";
-import { SelectPaymentContext } from "../../context/paymentMethod";
+import axios from "axios";
+import { useMemo } from "react";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 const PaymentPage = () => {
   const styles = {
@@ -34,16 +36,59 @@ const PaymentPage = () => {
       fontSize: "14px",
       lineHeight: "20px",
     },
+    size12: {
+      fontFamily: "Arial",
+      fontStyle: "normal",
+      fontWeight: "400",
+      fontSize: "12px",
+      paddingTop: "8px",
+    },
+    size10: {
+      fontFamily: "Arial",
+      fontStyle: "normal",
+      fontWeight: "400",
+      fontSize: "10px",
+      lineHeight: "14px",
+      textAlign: "center",
+    },
+    isActive: {
+      color: "white",
+      backgroundColor: "#0D28A6",
+      padding: 0.5,
+    },
+    isNonActive: {
+      color: "black",
+      backgroundColor: "white",
+      border: "1px solid #0D28A6",
+      padding: 0.5,
+    },
   };
 
-  const { searchedCar } = useContext(SearchedCarContext);
-
-  const { namaMobil, kategori, harga } = searchedCar || {};
-  //   const [paymentMethod, setPaymentMethod] = useState("");
-  const { payment, setPayment } = useContext(SelectPaymentContext);
-  const { method } = payment || {};
+  const selectedPaymentMethod = sessionStorage.getItem("selectedPayment");
+  const selectedPayment = JSON.parse(selectedPaymentMethod);
+  const [payment, setPayment] = useState(selectedPayment);
   const [isPayExpand, setPayExpand] = useState(true);
   const [isFinishPayment, setFinishPayment] = useState(false);
+  const [carId, setCarId] = useState({});
+  const { name, category } = carId || {};
+  function useQuery() {
+    const { search } = useLocation();
+    return useMemo(() => new URLSearchParams(search), [search]);
+  }
+  let query = useQuery();
+  const id = query.get("idCar");
+  const harga = 100000;
+  const getCarList = async () => {
+    const cars = await await axios.get(
+      `${process.env.REACT_APP_BASEURL}/customer/car/${id}`
+    );
+    setCarId(cars.data);
+  };
+
+  useEffect(() => {
+    getCarList();
+    // eslint-disable-next-line
+  }, []);
 
   // set item count sementara
   const dayCount = 7;
@@ -53,14 +98,9 @@ const PaymentPage = () => {
   let navigate = useNavigate();
 
   const selectPaymentMethod = (val) => {
-    const PaymentState = {
-      method: val,
-    };
-    setPayment(PaymentState);
+    setPayment(val);
+    sessionStorage.setItem("selectedPayment", JSON.stringify(val));
   };
-  //   useEffect(() => {
-  //     console.log(paymentMethod);
-  //   }, [paymentMethod, setPaymentMethod]);
 
   const createNewPaymentPage = () => {
     setFinishPayment(true);
@@ -77,17 +117,43 @@ const PaymentPage = () => {
     <>
       <Navbar />
       <div className="background-only">
-        <div className="container-back-button">
-          <div className="form-back-button">
-            <button
-              onClick={() => navigate(-1)}
-              className="payment-back-button"
-            >
-              <div className="button-pay-back">
-                <i className="fa fa-arrow-left" aria-hidden="true"></i>
-                <h5 style={styles.size14bold}>Pembayaran</h5>
+        <div className="container-payment">
+          <div className="cover-payment">
+            <div className="container-back-button">
+              <div className="form-back-button">
+                <button
+                  onClick={() => navigate(-1)}
+                  className="payment-back-button"
+                >
+                  <div className="button-pay-back">
+                    <i className="fa fa-arrow-left" aria-hidden="true"></i>
+                    <h5 style={styles.size14bold}>Pembayaran</h5>
+                  </div>
+                </button>
               </div>
-            </button>
+              <div className="page-info-now">
+                <div className="first">
+                  <span className="circle" style={styles.isActive}>
+                    <h6 style={styles.size10}>1</h6>
+                  </span>
+                  <h5 style={styles.size12}>Pilih Metode</h5>
+                </div>
+                <hr style={{ width: 28, height: 1 }} />
+                <div className="first">
+                  <span className="circle" style={styles.isNonActive}>
+                    <h6 style={styles.size10}>2</h6>
+                  </span>
+                  <h5 style={styles.size12}>Bayar</h5>
+                </div>
+                <hr style={{ width: 28, height: 1 }} />
+                <div className="first">
+                  <span className="circle" style={styles.isNonActive}>
+                    <h6 style={styles.size10}>3</h6>
+                  </span>
+                  <h5 style={styles.size12}>Tiket</h5>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -100,11 +166,11 @@ const PaymentPage = () => {
           <div className="payment-form-wrapper wrapper-payment-header">
             <div className="payment-head-item payment-car">
               <h5 style={styles.size14medium}>Nama/Tipe Mobil</h5>
-              <h5 style={styles.size14}>{namaMobil}</h5>
+              <h5 style={styles.size14}>{name}</h5>
             </div>
             <div className="payment-head-item payment-category">
               <h5 style={styles.size14medium}>Kategori</h5>
-              <h5 style={styles.size14}>{kategori}</h5>
+              <h5 style={styles.size14}>{category}</h5>
             </div>
             <div className="payment-head-item payment-start">
               <h5 style={styles.size14medium}>Tanggal Mulai Sewa</h5>
@@ -134,7 +200,7 @@ const PaymentPage = () => {
                 <div className="payment-body-button">
                   <h6 className="firstItem">BCA</h6>
                   <h6 className="secItem">BCA Transfer</h6>
-                  {method === "BCA" && (
+                  {payment === "BCA" && (
                     <>
                       <i
                         style={{
@@ -156,7 +222,7 @@ const PaymentPage = () => {
                 <div className="payment-body-button">
                   <h6 className="firstItem">BNI</h6>
                   <h6 className="secItem">BNI Transfer</h6>
-                  {method === "BNI" && (
+                  {payment === "BNI" && (
                     <>
                       <i
                         style={{
@@ -178,7 +244,7 @@ const PaymentPage = () => {
                 <div className="payment-body-button">
                   <h6 className="firstItemMandiri">Mandiri</h6>
                   <h6 className="secItem">Mandiri Transfer</h6>
-                  {method === "Mandiri" && (
+                  {payment === "Mandiri" && (
                     <>
                       <i
                         style={{
@@ -197,10 +263,10 @@ const PaymentPage = () => {
           </div>
           <div className="container-payment-cars">
             <div className="wrapper-payment-car mt-5">
-              <h6>Nama Mobil</h6>
+              <h6>{name}</h6>
               <p className="category-detail-cars">
                 <img src={userIcon} alt="" />
-                Kategori
+                Kategori {category}
               </p>
               <div className="total-details-cars total-payment-cars mt-5">
                 <button
@@ -320,7 +386,7 @@ const PaymentPage = () => {
                   </h6>
                 </span>
               </div>
-              {method ? (
+              {payment ? (
                 <button
                   className="payment-button-page"
                   style={{ background: "#5CB85F" }}
