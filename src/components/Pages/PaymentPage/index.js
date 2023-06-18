@@ -54,13 +54,11 @@ const PaymentPage = () => {
     isActive: {
       color: "white",
       backgroundColor: "#0D28A6",
-      padding: 0.5,
     },
     isNonActive: {
       color: "black",
       backgroundColor: "white",
       border: "1px solid #0D28A6",
-      padding: 0.5,
     },
   };
 
@@ -92,6 +90,7 @@ const PaymentPage = () => {
 
   // set item count sementara
   const dayCount = 7;
+
   const expandPaymentHandler = () => {
     setPayExpand((val) => !val);
   };
