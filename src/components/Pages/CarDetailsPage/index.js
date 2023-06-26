@@ -18,10 +18,29 @@ import "../CarDetailsPage/style.css";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { SearchedCarContext } from "../../context/searchedCar";
+import { format } from "date-fns";
+import { DayPicker } from "react-day-picker";
+import * as dayjs from "dayjs";
 
 const CarDetails = () => {
   const { setSearchedCar } = useContext(SearchedCarContext);
   const [carId, setCarId] = useState({});
+
+  const [range, setRange] = useState(undefined);
+
+  let footer = <p>Please pick the first day.</p>;
+
+  if (range?.from) {
+    if (!range.to) {
+      footer = <p>{format(range.from, "PPP")}</p>;
+    } else if (range.to) {
+      footer = (
+        <p>
+          {format(range.from, "PPP")}–{format(range.to, "PPP")}
+        </p>
+      );
+    }
+  }
 
   let query = useQuery();
   const id = query.get("idCar");
@@ -46,6 +65,8 @@ const CarDetails = () => {
         kategori: carId.category,
         harga: carId.price,
         status: carId.status,
+        tanggalMulai: range.from,
+        tanggalSelesai: range.to,
       };
       setSearchedCar(SearchedCarState);
     }
@@ -55,6 +76,30 @@ const CarDetails = () => {
     getCarList();
     // eslint-disable-next-line
   }, []);
+
+  const testOnly = () => {
+    const start = dayjs(range.from).format("YYYY-MM-DD");
+    const finish = dayjs(range.to).format("YYYY-MM-DD");
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        access_token:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGJjci5pbyIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTY2NTI0MjUwOX0.ZTx8L1MqJ4Az8KzoeYU2S614EQPnqk6Owv03PUSnkzc",
+      },
+      body: JSON.stringify({
+        start_rent_at: start,
+        finish_rent_at: finish,
+        car_id: id,
+      }),
+    };
+    fetch(`${process.env.REACT_APP_BASEURL}/customer/order`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+    // console.log(dayjs(range.from).format("YYYY-DD-MM"));q
+    // console.log(range.to);
+    console.log(id);
+  };
 
   let category;
   if (carId.category === "small" || carId.category === "Small") {
@@ -210,6 +255,21 @@ const CarDetails = () => {
               <span>
                 <h6 style={{ float: "right" }}>{numberFormat(carId.price)}</h6>
               </span>
+            </div>
+            <div className="open-calender">
+              <DayPicker
+                defaultMonth={new Date(Date.now())}
+                mode="range"
+                min={3}
+                max={7}
+                selected={range}
+                onSelect={setRange}
+                footer={footer}
+                format={"YYYY-DD-MM"}
+              />
+              <Button variant="success" onClick={testOnly}>
+                Simpan Tanggal
+              </Button>
             </div>
             <Link to={`/payments?idCar=${carId.id}`}>
               <Button onClick={buttonHandler}>Lanjut Bayar</Button>

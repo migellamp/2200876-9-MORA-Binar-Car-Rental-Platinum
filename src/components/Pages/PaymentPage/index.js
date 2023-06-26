@@ -77,10 +77,11 @@ const PaymentPage = () => {
   const id = query.get("idCar");
   const harga = 100000;
   const getCarList = async () => {
-    const cars = await await axios.get(
+    const cars = await axios.get(
       `${process.env.REACT_APP_BASEURL}/customer/car/${id}`
     );
     setCarId(cars.data);
+    console.log(cars.data);
   };
 
   useEffect(() => {
@@ -173,7 +174,7 @@ const PaymentPage = () => {
             </div>
             <div className="payment-head-item payment-start">
               <h5 style={styles.size14medium}>Tanggal Mulai Sewa</h5>
-              <h5 style={styles.size14}>belom</h5>
+              <h5 style={styles.size14}></h5>
             </div>
             <div className="payment-head-item payment-end">
               <h5 style={styles.size14medium}>Tanggal Akhir Sewa</h5>
