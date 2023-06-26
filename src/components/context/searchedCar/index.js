@@ -11,6 +11,8 @@ const SearchedCarProvider = ({ children }) => {
     kategori: "",
     harga: "",
     status: "",
+    tanggalMulai: "",
+    tanggalSelesai: "",
   };
 
   const [searchedCar, setSearchedCar] = useState(SearchedCarState);

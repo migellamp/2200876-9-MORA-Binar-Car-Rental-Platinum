@@ -10,6 +10,7 @@ import { Alert, Fade } from "react-bootstrap";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
+import { FileUploader } from "react-drag-drop-files";
 
 const FinishPayment = () => {
   const [copied, setCopied] = useState(false);
@@ -24,6 +25,12 @@ const FinishPayment = () => {
   const harga = 8000000;
   const dateNow = useRef(Date.now());
   const [show, setShow] = useState(false);
+  const fileTypes = ["JPG", "PNG", "GIF"];
+  const [file, setFile] = useState(null);
+
+  const handleChange = (file) => {
+    setFile(file);
+  };
 
   let navigate = useNavigate();
   const styles = {
@@ -561,7 +568,7 @@ const FinishPayment = () => {
                     </div>
                     <div className="righ-item">
                       <Countdown
-                        date={dateConfirm + 599000}
+                        date={dateConfirm + 5900}
                         renderer={rendererConfirm}
                       />
                     </div>
@@ -578,7 +585,15 @@ const FinishPayment = () => {
                     Untuk membantu kami lebih cepat melakukan pengecekan. Kamu
                     bisa upload bukti bayarmu
                   </h6>
-                  <button className="sewa-button confirm-button mt-2">
+                  <FileUploader
+                    handleChange={handleChange}
+                    name="file"
+                    types={fileTypes}
+                  />
+                  <button
+                    className="sewa-button confirm-button mt-2"
+                    onClick={() => console.log(file)}
+                  >
                     Upload
                   </button>
                 </div>

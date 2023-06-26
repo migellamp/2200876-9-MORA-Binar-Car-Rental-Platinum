@@ -1,4 +1,5 @@
 import * as React from "react";
+import "react-day-picker/dist/style.css";
 import LandingPage from "./components/Pages/LandingPage/LandingPage";
 import SearchCarPage from "./components/Pages/SearchCar/SearchCarPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
