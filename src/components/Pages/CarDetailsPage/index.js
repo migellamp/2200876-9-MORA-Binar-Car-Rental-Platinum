@@ -21,8 +21,16 @@ import { SearchedCarContext } from "../../context/searchedCar";
 import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
 import * as dayjs from "dayjs";
+import { Navigate } from "react-router-dom";
 
 const CarDetails = () => {
+  const role = localStorage.getItem('role')
+
+  if (document.cookie === "" ) {
+    return <Navigate to="/signin" />;
+  } else if (role === "Admin") {
+    return <Navigate to="/signin" />;
+  }
   const { setSearchedCar } = useContext(SearchedCarContext);
   const [carId, setCarId] = useState({});
 

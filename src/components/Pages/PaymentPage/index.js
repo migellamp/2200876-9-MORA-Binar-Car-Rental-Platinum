@@ -11,8 +11,16 @@ import axios from "axios";
 import { useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { Navigate } from "react-router-dom";
 
 const PaymentPage = () => {
+  const role = localStorage.getItem('role')
+
+  if (document.cookie === "" ) {
+    return <Navigate to="/signin" />;
+  } else if (role === "Admin") {
+    return <Navigate to="/signin" />;
+  }
   const styles = {
     size14medium: {
       fontFamily: "Arial",

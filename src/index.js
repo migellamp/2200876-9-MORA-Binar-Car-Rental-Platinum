@@ -1,19 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import reportWebVitals from "./reportWebVitals";
 import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 import SearchedCarProvider from "./components/context/searchedCar";
 import SelectPaymentProvider from "./components/context/paymentMethod";
+import AuthProvider from "./components/context/auth";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <SearchedCarProvider>
-      <SelectPaymentProvider>
-        <App />
-      </SelectPaymentProvider>
-    </SearchedCarProvider>
+    <AuthProvider>
+      <SearchedCarProvider>
+        <SelectPaymentProvider>
+          <App />
+        </SelectPaymentProvider>
+      </SearchedCarProvider>
+    </AuthProvider>
   </React.StrictMode>
 );
 
