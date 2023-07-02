@@ -4,8 +4,19 @@ import Chart from "react-apexcharts";
 import { DayPicker } from "react-day-picker";
 import { format } from "date-fns";
 import dayjs from "dayjs";
+import { Navigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const DashboardAdmin = () => {
+  if (document.cookie === "") return <Navigate to={"/admin"} />;
+  const navigate = useNavigate();
+  const role = localStorage.getItem("role");
+
+  if (role !== "Admin") {
+    return <Navigate to="/admin" />;
+  }
+
   const chartData = {
     options: {
       chart: {
@@ -102,6 +113,16 @@ const DashboardAdmin = () => {
   return (
     <>
       <h1>Admin Page</h1>
+      <Button
+        onClick={() => {
+          document.cookie = `uidTokenBinarApp=; expires=Thu, 01 Jan 1970 00:00:00 UTC`;
+          localStorage.removeItem("role");
+          return navigate("/admin");
+        }}
+        className="btn btn-primary btn-block w-100"
+      >
+        Log Out
+      </Button>
       <DayPicker
         defaultMonth={new Date(Date.now())}
         mode="range"

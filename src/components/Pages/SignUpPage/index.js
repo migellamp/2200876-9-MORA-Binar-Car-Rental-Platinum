@@ -1,15 +1,15 @@
-import React, { useContext } from 'react'
-import FormSignUp from './FormSignUp'
+import React, { useContext } from "react";
+import FormSignUp from "./FormSignUp";
 
-import { authContextRegister } from '../../context/authRegister'
-import { useNavigate } from 'react-router-dom'
+import { authContextRegister } from "../../context/authRegister";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-  const navigate = useNavigate()
-  const [, dataAuthRegister] = useContext(authContextRegister)
-  const { id } = dataAuthRegister?.dataAuthRegister || {}
-  if (id) return navigate('/')
-  return <FormSignUp />
-}
+  const [, dataAuthRegister] = useContext(authContextRegister);
+  const { id } = dataAuthRegister?.dataAuthRegister || {};
+  const navigate = useNavigate();
+  if (id) navigate("/sign-in");
+  return <FormSignUp />;
+};
 
-export default SignUp
+export default SignUp;

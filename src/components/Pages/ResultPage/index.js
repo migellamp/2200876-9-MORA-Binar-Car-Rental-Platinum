@@ -9,14 +9,13 @@ function useQuery() {
   return useMemo(() => new URLSearchParams(search), [search]);
 }
 
-
 const DetailsPage = () => {
-  const role = localStorage.getItem('role')
+  const role = localStorage.getItem("role");
 
-  if (document.cookie === "" ) {
-    return <Navigate to="/signin" />;
+  if (document.cookie === "") {
+    return <Navigate to="/sign-in" />;
   } else if (role === "Admin") {
-    return <Navigate to="/signin" />;
+    return <Navigate to="/sign-in" />;
   }
   let query = useQuery();
   const name = query.get("name");

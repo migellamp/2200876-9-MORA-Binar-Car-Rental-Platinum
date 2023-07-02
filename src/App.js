@@ -5,10 +5,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import CarResult from "./components/Pages/ResultPage";
 import CarDetails from "./components/Pages/CarDetailsPage";
 import PaymentPage from "./components/Pages/PaymentPage";
-import SignIn from "./components/Pages/Customer/Login"
+import SignIn from "./components/Pages/Customer/Login";
 import LogAdm from "./components/Pages/Admin/LoginAdm/index";
 import SignUp from "./components/Pages/SignUpPage";
-import React from "react";
 import DashboardAdmin from "./components/Pages/DashboardAdmin";
 // import { getCarList } from "./API/api";
 // import { useState } from "react";
@@ -25,10 +24,11 @@ const App = () => {
         <Route path="/car-result" element={<CarResult />} />
         <Route path="/car-details" element={<CarDetails />} />
         <Route path="/payments" element={<PaymentPage />} />
-        <Route path="/signin" element={<SignIn />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route exact path="/sign-up" element={<SignUp />} />
         {/* ADMIN PAGE */}
         <Route path="/admin" element={<LogAdm />} />
-        <Route exact path="/admin/dashboard" element={<DashboardAdmin />} />
+        <Route path="/admin/dashboard" element={<DashboardAdmin />} />
       </Routes>
     </Router>
   );

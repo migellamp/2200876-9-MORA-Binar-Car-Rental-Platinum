@@ -12,11 +12,13 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <AuthProvider>
-      <SearchedCarProvider>
-        <SelectPaymentProvider>
-          <App />
-        </SelectPaymentProvider>
-      </SearchedCarProvider>
+      <AuthProviderRegister>
+        <SearchedCarProvider>
+          <SelectPaymentProvider>
+            <App />
+          </SelectPaymentProvider>
+        </SearchedCarProvider>
+      </AuthProviderRegister>
     </AuthProvider>
   </React.StrictMode>
 );
