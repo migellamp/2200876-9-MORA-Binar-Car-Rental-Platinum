@@ -9,6 +9,14 @@ import React from 'react'
 // import { getCarList } from "./API/api";
 // import { useState } from "react";
 // import { useEffect } from "react";
+import * as React from "react";
+import "react-day-picker/dist/style.css";
+import LandingPage from "./components/Pages/LandingPage/LandingPage";
+import SearchCarPage from "./components/Pages/SearchCar/SearchCarPage";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import CarResult from "./components/Pages/ResultPage";
+import CarDetails from "./components/Pages/CarDetailsPage";
+import PaymentPage from "./components/Pages/PaymentPage";
 
 const App = () => {
   return (

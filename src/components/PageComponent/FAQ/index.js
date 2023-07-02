@@ -1,6 +1,8 @@
-import Dropdown, { DropdownBottom } from '../Dropdown'
-import React from 'react'
-import './style.css'
+import Dropdown from "../Dropdown";
+import { DropdownBottom } from "../Dropdown";
+import "./style.css";
+import * as React from "react";
+
 const Question = () => {
     return (
         <div className="container-all-question" id="faqSection">
@@ -27,7 +29,7 @@ const Question = () => {
                 </div>
             </div>
         </div>
-    )
-}
+  );
+};
 
 export default Question

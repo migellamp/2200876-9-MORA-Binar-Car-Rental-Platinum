@@ -1,3 +1,6 @@
+
+import * as React from "react";
+
 const Card = ({ image, desc, person }) => {
   return (
     <div className="card card-testimonial">
