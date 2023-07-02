@@ -301,3 +301,87 @@
     flex-direction: row;
     justify-content: space-between;
 }
+.guZdik{
+    height: 162px !important;
+    background-color:  rgb(238, 238, 238) !important;
+    border: 1px dashed rgb(195, 195, 195) !important;
+    text-decoration: none !important;
+    flex-direction: column !important;
+}
+
+.guZdik svg path{
+    fill: black !important;
+}
+
+.guZdik svg{
+    margin-top: 55px;
+}
+
+.guZdik span{
+    color:  rgb(238, 238, 238) !important
+}
+
+.image-preview{
+    position: absolute;
+    top: 470px;
+    left: 1112px;
+}
+
+.image-preview img{
+    height: 162px;
+    width: 210px;
+    object-fit:fill !important;
+    object-position: top !important;
+}
+
+.ticket-logo{
+    text-align: center;
+}
+.ticket-viewer{
+    border-radius: 8px;
+    background: var(--neutral-01, #FFF);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
+    width: 605px;
+    height: fit-content;
+        padding: 24px;
+}
+.ticket-body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.top-viewer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.top-download button{
+    background-color: white;
+    border: none;
+    border: 1px solid #0D28A6;
+    color: #0D28A6;
+    padding:8px 12px 8px 12px;
+}
+
+.top-download button:hover{
+    background-color: #d7d8db75;
+}
+.react-pdf__Page__canvas {
+    width: 100% !important;
+    height: 200px !important;
+    object-fit: cover !important;
+    object-position: top !important;
+}
+.container-pdf{
+    border: 1px solid rgb(180, 180, 180);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
+    border-style: dashed;
+    border-radius: 20px;
+    padding: 24px;
+}
+.__react_modal_image__modal_content img{
+    width: 80% !important;
+    height: 80% !important;
+}

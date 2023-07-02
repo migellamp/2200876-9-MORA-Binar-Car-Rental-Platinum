@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import SearchedCarProvider from "./components/context/searchedCar";
 import SelectPaymentProvider from "./components/context/paymentMethod";
 import AuthProvider from "./components/context/auth";
+import AuthProviderRegister from "./components/context/authRegister";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

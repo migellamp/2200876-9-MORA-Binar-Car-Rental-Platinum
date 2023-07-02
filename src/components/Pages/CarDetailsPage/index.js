@@ -3,7 +3,7 @@ import * as React from "react";
 import { useLocation } from "react-router-dom";
 import SearchFormInput from "../../../components/PageComponent/SearchForm/InputForm";
 import SelectFormInput from "../../PageComponent/SearchForm/SelectForm";
-import { useContext, useMemo } from "react";
+import { useMemo } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
@@ -15,12 +15,10 @@ import {
 } from "../../PageComponent/SearchForm/constanta";
 import Footer from "../../PageComponent/Footer/index";
 import "../CarDetailsPage/style.css";
-import { Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { SearchedCarContext } from "../../context/searchedCar";
 import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
 import * as dayjs from "dayjs";
+
 import { Navigate } from "react-router-dom";
 
 const CarDetails = () => {
@@ -33,9 +31,11 @@ const CarDetails = () => {
   }
   const { setSearchedCar } = useContext(SearchedCarContext);
   const [carId, setCarId] = useState({});
-
+  const [openDateButton, SetDateButton] = useState(false);
   const [range, setRange] = useState(undefined);
-
+  const [selectedFirstDate, setFirstSelectedDate] = useState(null);
+  const [selectedSecondDate, setSecondSelectedDate] = useState(null);
+  const [nextPaymentPage, setNext] = useState(false);
   let footer = <p>Please pick the first day.</p>;
 
   if (range?.from) {
@@ -59,25 +59,11 @@ const CarDetails = () => {
   }
 
   const getCarList = async () => {
-    const cars = await await axios.get(
+    const cars = await axios.get(
       `${process.env.REACT_APP_BASEURL}/customer/car/${id}`
     );
     console.log(cars.data);
     setCarId(cars.data);
-  };
-
-  const buttonHandler = () => {
-    if (carId) {
-      const SearchedCarState = {
-        namaMobil: carId.name,
-        kategori: carId.category,
-        harga: carId.price,
-        status: carId.status,
-        tanggalMulai: range.from,
-        tanggalSelesai: range.to,
-      };
-      setSearchedCar(SearchedCarState);
-    }
   };
 
   useEffect(() => {
@@ -85,57 +71,65 @@ const CarDetails = () => {
     // eslint-disable-next-line
   }, []);
 
-  const testOnly = () => {
+  const postRentHandler = async () => {
     const start = dayjs(range.from).format("YYYY-MM-DD");
     const finish = dayjs(range.to).format("YYYY-MM-DD");
     const requestOptions = {
-      method: "POST",
       headers: {
         "Content-Type": "application/json",
         access_token:
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGJjci5pbyIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTY2NTI0MjUwOX0.ZTx8L1MqJ4Az8KzoeYU2S614EQPnqk6Owv03PUSnkzc",
       },
-      body: JSON.stringify({
-        start_rent_at: start,
-        finish_rent_at: finish,
-        car_id: id,
-      }),
     };
-    fetch(`${process.env.REACT_APP_BASEURL}/customer/order`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => console.log(data));
-    // console.log(dayjs(range.from).format("YYYY-DD-MM"));q
-    // console.log(range.to);
-    console.log(id);
+    const post = await axios.post(
+      `${process.env.REACT_APP_BASEURL}/customer/order`,
+      { start_rent_at: start, finish_rent_at: finish, car_id: id },
+      requestOptions
+    );
+    navigate(`/payments?orderId=${post.data.id}`);
+  };
+
+  const testOnly = () => {
+    setFirstSelectedDate(
+      range.from.toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      })
+    );
+    setSecondSelectedDate(
+      range.to.toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      })
+    );
+    SetDateButton(false);
+    setNext(true);
   };
 
   let category;
   if (carId.category === "small" || carId.category === "Small") {
     category = "2 - 4 orang";
-  }
-  if (carId.category === "medium" || carId.category === "Medium") {
+  } else if (carId.category === "medium" || carId.category === "Medium") {
     category = "4 - 6 orang";
-  }
-  if (carId.category === "large" || carId.category === "Large") {
+  } else if (carId.category === "large" || carId.category === "Large") {
     category = "6 - 8 orang";
   }
 
   let price;
-  if (carId.price < "400000") {
+  if (carId.price < 400000) {
     price = "< Rp.400.000";
-  }
-  if (carId.price < "600000" && carId.price > "400000") {
+  } else if (carId.price > 400000 && carId.price < 600000) {
     price = "Rp.400.000 - Rp.600.000";
-  }
-  if (carId.category === "large") {
+  } else if (carId.price > 600000) {
     price = "> Rp.600.000";
   }
 
   let status;
   if (carId.status === false) {
     status = "Disewakan";
-  }
-  if (carId.status === true) {
+  } else if (carId.status === true) {
     status = "Kosong";
   }
 
@@ -264,25 +258,71 @@ const CarDetails = () => {
                 <h6 style={{ float: "right" }}>{numberFormat(carId.price)}</h6>
               </span>
             </div>
-            <div className="open-calender">
-              <DayPicker
-                defaultMonth={new Date(Date.now())}
-                mode="range"
-                min={3}
-                max={7}
-                selected={range}
-                onSelect={setRange}
-                footer={footer}
-                format={"YYYY-DD-MM"}
-              />
-              <Button variant="success" onClick={testOnly}>
-                Simpan Tanggal
-              </Button>
-            </div>
-            <Link to={`/payments?idCar=${carId.id}`}>
-              <Button onClick={buttonHandler}>Lanjut Bayar</Button>
-            </Link>
-            <p>button buat testing(hapus gpp)</p>
+            {selectedFirstDate == null ? (
+              <button
+                className="showInputDateForm"
+                onClick={() => SetDateButton(() => !openDateButton)}
+              >
+                Pilih Tanggal
+              </button>
+            ) : (
+              <button
+                className="showInputDateForm"
+                onClick={() => SetDateButton(() => !openDateButton)}
+              >
+                {selectedFirstDate} - {selectedSecondDate}
+              </button>
+            )}
+            {openDateButton && (
+              <div className="open-calender">
+                <DayPicker
+                  defaultMonth={new Date(Date.now())}
+                  mode="range"
+                  min={3}
+                  max={7}
+                  selected={range}
+                  onSelect={setRange}
+                  footer={footer}
+                  format={"YYYY-DD-MM"}
+                />
+                <button
+                  className="sewa-button confirm-button mt-2"
+                  onClick={testOnly}
+                  style={{
+                    width: "320px",
+                    backgroundColor: "#35B0A7",
+                    color: "white",
+                    fontWeight: "bold",
+                    border: "#5CB85F",
+                    paddingTop: 8,
+                    paddingLeft: 12,
+                    paddingRight: 12,
+                    paddingBottom: 8,
+                    alignItems: "center",
+                  }}
+                >
+                  Simpan Tanggal
+                </button>
+              </div>
+            )}
+            {nextPaymentPage == true ? (
+              <button
+                className="sewa-button confirm-button mt-3"
+                onClick={postRentHandler}
+              >
+                Lanjutkan Pembayaran
+              </button>
+            ) : (
+              <button
+                className="sewa-button confirm-button mt-3"
+                onClick={postRentHandler}
+                disabled
+                style={{ backgroundColor: "#35B0A733" }}
+              >
+                Lanjutkan Pembayaran
+              </button>
+            )}
+
             {/* <Link to={('/search')}><button className="btn btn-success">Back</button></Link>
                     <Link to={('/search')}><button style={{float:"right"}} className="btn btn-success">Checkout</button></Link> */}
           </div>

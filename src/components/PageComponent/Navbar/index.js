@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import React, { useState } from "react";
 import "./style.css";
 import CloseIcon from "../../../image/icon-close.png";
 import * as React from "react";
@@ -87,6 +87,12 @@ const Navbar = () => {
                     >
                       Log Out
                     </Button>
+                  <li className="nav-item sidebar-funct">
+                    <Link to="/sign-up">
+                      <Button className="btnRegister" variant="success">
+                        Register
+                      </Button>
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -128,6 +134,11 @@ const Navbar = () => {
                   Log Out
                 </Button>
               </li>
+              <Link to="/sign-up">
+                <Button className="btnRegister" variant="success">
+                  Register
+                </Button>
+              </Link>
             </ul>
           </div>
         </nav>
