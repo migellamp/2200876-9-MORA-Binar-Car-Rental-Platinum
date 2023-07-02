@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
-import ImageRegister from "../../../../image/landing-register.png";
+import signcust from "../../../../image/signcust.png";
 import "./style.css";
 import { authContextRegister } from "../../../context/authRegister";
 
@@ -107,13 +107,8 @@ const FormSignUp = () => {
               alignItems: "flex-end",
             }}
           >
-            <div className="wrap-col-2">
-              <h1 className="nameBinar">Binar Car Rental</h1>
-              <img
-                src={ImageRegister}
-                className="landing-img"
-                alt="car-banner-regis"
-              />
+            <div className="bg-primary">
+              <img className="max-width-100" src={signcust} />
             </div>
           </Col>
         </Row>
