@@ -1,3 +1,5 @@
+import carImage from '../../../image/img_car.png'
+import React from 'react'
 import * as React from "react";
 import "./style.css";
 import carImage from "../../../image/img_car.png";
@@ -13,13 +15,15 @@ const BannerSearch = () => {
               <h6
                 style={{
                   fontSize: 14,
+                  fontWeight: 'bolders',
+                  marginBottom: 16
                   fontWeight: "bolders",
                   marginBottom: 16,
                 }}
               >
                 Selamat datang di Binar Car Rental. Kami menyediakan mobil
                 kualitas terbaik dengan harga terjangkau. Selalu siap melayani
-                kebutuhanmu untuk sewa mobil selama 24 jam.{" "}
+                kebutuhanmu untuk sewa mobil selama 24 jam.{' '}
               </h6>
             </div>
           </div>
@@ -31,7 +35,10 @@ const BannerSearch = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default BannerSearch;
+export default BannerSearch
+
+
+
