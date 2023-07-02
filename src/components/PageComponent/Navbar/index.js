@@ -1,17 +1,17 @@
-import { useNavigate, Link } from 'react-router-dom'
-import React, { useState } from 'react'
-import './style.css'
-import CloseIcon from '../../../image/icon-close.png'
+import { useNavigate, Link } from "react-router-dom";
+import React, { useState } from "react";
+import "./style.css";
+import CloseIcon from "../../../image/icon-close.png";
 
-import { Button } from 'react-bootstrap'
+import { Button } from "react-bootstrap";
 
 const Navbar = () => {
-  const [sidebar, setSidebar] = useState(false)
+  const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => {
-    setSidebar((prev) => !prev)
-    console.log(sidebar)
-  }
-  const navigate = useNavigate()
+    setSidebar((prev) => !prev);
+    console.log(sidebar);
+  };
+  const navigate = useNavigate();
   return (
     <>
       <div className="container-navbar">
@@ -20,7 +20,7 @@ const Navbar = () => {
             className="navbar-brand navbar-judul"
             href="/"
             onClick={() => {
-              return navigate('/')
+              return navigate("/");
             }}
           >
             Rental Binar
@@ -28,7 +28,7 @@ const Navbar = () => {
           <button
             onClick={showSidebar}
             style={
-              sidebar ? { visibility: 'hidden' } : { visibility: 'visible' }
+              sidebar ? { visibility: "hidden" } : { visibility: "visible" }
             }
             className="navbar-toggler d-lg-none"
             type="button"
@@ -119,7 +119,7 @@ const Navbar = () => {
         </nav>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
