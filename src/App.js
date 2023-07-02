@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import CarResult from "./components/Pages/ResultPage";
 import CarDetails from "./components/Pages/CarDetailsPage";
 import PaymentPage from "./components/Pages/PaymentPage";
+import ListCar from "./components/Pages/Admin/ListCar";
+import EditCar from "./components/Pages/Admin/EditCar";
 // import { getCarList } from "./API/api";
 // import { useState } from "react";
 // import { useEffect } from "react";
@@ -12,15 +14,18 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LandingPage/>} />
-        <Route path="/search" element={<SearchCarPage/>} />
-        <Route path="/car-result" element={<CarResult/>} />
-        <Route path="/car-details" element={<CarDetails/>}/>
-        <Route path="/payments" element={<PaymentPage/>}/>
-        <Route/>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/search" element={<SearchCarPage />} />
+        <Route path="/car-result" element={<CarResult />} />
+        <Route path="/car-details" element={<CarDetails />} />
+        <Route path="/payments" element={<PaymentPage />} />
+        {/* admin */}
+        <Route path="/admin/list-car" element={<ListCar />} />
+        <Route path="/admin/edit-car" element={<EditCar />} />
+        <Route />
       </Routes>
     </Router>
   );
-}
+};
 
-export default App
+export default App;
