@@ -10,8 +10,16 @@ import invoiceImage from "../../../invoice.pdf";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import { Link } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const TicketPage = () => {
+  const role = localStorage.getItem("role");
+
+  if (document.cookie.includes("uidTokenBinarApp") === false) {
+    return <Navigate to="/sign-in" />;
+  } else if (role === "Admin") {
+    return <Navigate to="/sign-in" />;
+  }
   const navigate = useNavigate();
   const [isBackPayment, setIsBackPayment] = React.useState(false);
   const [pageNumber] = React.useState(1);

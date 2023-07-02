@@ -18,18 +18,18 @@ import "../CarDetailsPage/style.css";
 import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
 import * as dayjs from "dayjs";
-
+import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 
 const CarDetails = () => {
-  const role = localStorage.getItem('role')
+  const navigate = useNavigate();
+  const role = localStorage.getItem("role");
 
-  if (document.cookie === "" ) {
+  if (document.cookie === "") {
     return <Navigate to="/signin" />;
   } else if (role === "Admin") {
     return <Navigate to="/signin" />;
   }
-  const { setSearchedCar } = useContext(SearchedCarContext);
   const [carId, setCarId] = useState({});
   const [openDateButton, SetDateButton] = useState(false);
   const [range, setRange] = useState(undefined);

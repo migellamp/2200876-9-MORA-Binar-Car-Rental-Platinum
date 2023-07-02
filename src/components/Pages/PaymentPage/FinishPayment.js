@@ -18,8 +18,16 @@ import axios from "axios";
 import { useMemo } from "react";
 import dayjs from "dayjs";
 import TicketPage from "./tiket";
+import { Navigate } from "react-router-dom";
 
 const FinishPayment = () => {
+  const role = localStorage.getItem("role");
+
+  if (document.cookie.includes("uidTokenBinarApp") === false) {
+    return <Navigate to="/sign-in" />;
+  } else if (role === "Admin") {
+    return <Navigate to="/sign-in" />;
+  }
   const [percent, setPercent] = useState(0);
   const [isUpload, setUpload] = useState(false);
   const [carId, setCarId] = useState({});

@@ -9,7 +9,8 @@ import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const DashboardAdmin = () => {
-  if (document.cookie === "") return <Navigate to={"/admin"} />;
+  if (document.cookie.includes("uidTokenBinarApp") === false)
+    return <Navigate to={"/admin"} />;
   const navigate = useNavigate();
   const role = localStorage.getItem("role");
 

@@ -121,7 +121,7 @@ const Navbar = () => {
                 </a>
               </li>
               <li>
-                {document.cookie != "" ? (
+                {document.cookie.includes("uidTokenBinarApp") ? (
                   <Button
                     onClick={() => {
                       document.cookie = `uidTokenBinarApp=; expires=Thu, 01 Jan 1970 00:00:00 UTC`;
@@ -131,13 +131,13 @@ const Navbar = () => {
                   >
                     Log Out
                   </Button>
-                ) : document.cookie === "" ? (
+                ) : (
                   <Link to="/sign-up">
                     <Button className="btnRegister" variant="success">
                       Register
                     </Button>
                   </Link>
-                ) : null}
+                )}
               </li>
             </ul>
           </div>

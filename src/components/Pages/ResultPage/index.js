@@ -12,7 +12,7 @@ function useQuery() {
 const DetailsPage = () => {
   const role = localStorage.getItem("role");
 
-  if (document.cookie === "") {
+  if (document.cookie.includes("uidTokenBinarApp") === false) {
     return <Navigate to="/sign-in" />;
   } else if (role === "Admin") {
     return <Navigate to="/sign-in" />;

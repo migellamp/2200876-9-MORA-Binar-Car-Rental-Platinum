@@ -16,7 +16,10 @@ const FormView = () => {
     console.log("Login successful!");
   };
   const role = localStorage.getItem("role");
-  if (document.cookie !== "" && role == "Customer")
+  if (
+    document.cookie.includes("uidTokenBinarApp") === true &&
+    role == "Customer"
+  )
     return <Navigate to={"/"} />;
 
   return (
