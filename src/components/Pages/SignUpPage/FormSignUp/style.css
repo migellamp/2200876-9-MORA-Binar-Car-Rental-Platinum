@@ -1,0 +1,57 @@
+/* STYLE UNTUK PAGE FORM SIGN UP */
+.form-label {
+  font-family: Arial;
+  font-style: normal;
+  font-size: 14px;
+}
+.form-sign-up {
+  width: 370px;
+  height: 67.18px;
+}
+.button-log {
+  height: 36px;
+  width: 370px;
+  left: 175px;
+  top: 590px;
+  border-radius: 2px !important;
+  padding: 8px 12px 8px 12px;
+  background-color: #0d28a6 !important;
+}
+.box-sign-up {
+  width: 100px;
+  height: 34px;
+  margin-bottom: 2em;
+  background: #cfd4ed;
+}
+.nameBinar {
+  font-weight: 600;
+  color: #ffffff;
+  font-size: 40px;
+  margin-bottom: 1em;
+}
+.form-col-1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.form-col-2 {
+  background: #0d28a6;
+  padding: 0;
+}
+.wrap-col-2 {
+  display: flex;
+  flex-direction: column;
+}
+.landing-img {
+  width: 430px;
+}
+
+@media screen and (max-width: 1000px) {
+  .form-col-1 {
+    width: 100% !important;
+  }
+  .form-col-2 {
+    display: none !important;
+  }
+}

@@ -1,35 +1,34 @@
-import { useContext } from 'react';
+import React, { useContext } from 'react'
 import '../InputForm/style.css'
-import { SearchedCarContext } from '../../../context/searchedCar';
+import { SearchedCarContext } from '../../../context/searchedCar'
 
-const SearchFormInput = ({labelName, defaultValue, disabled, id,widthStyle}) =>{
+const SearchFormInput = ({ labelName, defaultValue, disabled, id, widthStyle }) => {
     const { searchedCar, setSearchedCar } = useContext(SearchedCarContext)
-    const { kategori, harga, status} = searchedCar || {}
-    
+    const { kategori, harga, status } = searchedCar || {}
 
     const getValue = (e) => {
         const SearchedCarState = {
             namaMobil: e.target.value,
-            kategori: kategori,
-            harga: harga,
-            status: status,
+            kategori,
+            harga,
+            status
         }
-        setSearchedCar(SearchedCarState);
+        setSearchedCar(SearchedCarState)
     }
     return (
         <div className="form-group wrapper-input-form">
-            <label className='label-input-form' for="">{labelName}</label>
-            <input 
-                type="text" 
-                name="" 
-                id={id} 
+            <label className='label-input-form' htmlFor="">{labelName}</label>
+            <input
+                type="text"
+                name=""
+                id={id}
                 className="form-control input-form"
-                placeholder="Ketik nama/tipe mobil" 
+                placeholder="Ketik nama/tipe mobil"
                 aria-describedby="helpId"
                 onChange={getValue}
                 defaultValue={defaultValue}
                 disabled={disabled}
-                style={{width:widthStyle}}
+                style={{ width: widthStyle }}
             />
         </div>
     )

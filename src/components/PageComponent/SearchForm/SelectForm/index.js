@@ -2,12 +2,12 @@ import '../SelectForm/style.css'
 import { SearchedCarContext } from '../../../context/searchedCar'
 import { useContext } from 'react'
 
-const SelectFormInput = ({labelName, arrayList, selected, id, disabled, widthStyle}) =>{
+const SelectFormInput = ({ labelName, arrayList, selected, id, disabled, widthStyle }) => {
     const { searchedCar, setSearchedCar } = useContext(SearchedCarContext)
-    const { namaMobil, kategori, harga, status} = searchedCar || {}
+    const { namaMobil, kategori, harga, status } = searchedCar || {}
 
     const getValue = (e) => {
-        if(labelName === "Kategori"){
+        if (labelName === "Kategori") {
             const SearchedCarState = {
                 namaMobil: namaMobil,
                 kategori: e.target.value,
@@ -16,7 +16,7 @@ const SelectFormInput = ({labelName, arrayList, selected, id, disabled, widthSty
             }
             setSearchedCar(SearchedCarState);
         }
-        if(labelName === "Status"){
+        if (labelName === "Status") {
             const SearchedCarState = {
                 namaMobil: namaMobil,
                 kategori: kategori,
@@ -25,7 +25,7 @@ const SelectFormInput = ({labelName, arrayList, selected, id, disabled, widthSty
             }
             setSearchedCar(SearchedCarState);
         }
-        if(labelName === "Harga"){
+        if (labelName === "Harga") {
             const SearchedCarState = {
                 namaMobil: namaMobil,
                 kategori: kategori,
@@ -37,14 +37,14 @@ const SelectFormInput = ({labelName, arrayList, selected, id, disabled, widthSty
     }
     return (
         <div className="form-group wrapper-input-form">
-            <label className='label-input-form' for="">{labelName}</label>
-                <select onChange={getValue} defaultValue={selected} className="form-select input-form" name="" id={id} disabled={disabled} style={{width:widthStyle}}>
+            <label className='label-input-form' htmlFor="">{labelName}</label>
+            <select onChange={getValue} defaultValue={selected} className="form-select input-form" name="" id={id} disabled={disabled} style={{ width: widthStyle }}>
                 {
-                    arrayList.map((value)=>{
+                    arrayList.map((value) => {
                         return <option value={value.text} key={value.id}>{value.text}</option>
                     })
                 }
-                    {/* <option selected>Select one</option> */}
+                {/* <option selected>Select one</option> */}
             </select>
         </div>
     )
