@@ -2,16 +2,20 @@ import { useNavigate, Link } from "react-router-dom";
 import React, { useState } from "react";
 import "./style.css";
 import CloseIcon from "../../../image/icon-close.png";
-
+import * as React from "react";
 import { Button } from "react-bootstrap";
 
 const Navbar = () => {
   const [sidebar, setSidebar] = useState(false);
+
   const showSidebar = () => {
     setSidebar((prev) => !prev);
     console.log(sidebar);
   };
   const navigate = useNavigate();
+
+
+
   return (
     <>
       <div className="container-navbar">
@@ -73,6 +77,16 @@ const Navbar = () => {
                       FAQ
                     </a>
                   </li>
+                  <li>
+                    <Button
+                      onClick={() => {
+                        document.cookie = `uidTokenBinarApp=; expires=Thu, 01 Jan 1970 00:00:00 UTC`
+                        return navigate("/signin");
+                      }}
+                      className="btn btn-primary btn-block w-100"
+                    >
+                      Log Out
+                    </Button>
                   <li className="nav-item sidebar-funct">
                     <Link to="/sign-up">
                       <Button className="btnRegister" variant="success">
@@ -108,6 +122,17 @@ const Navbar = () => {
                 <a className="nav-link" href="/#faqSection">
                   FAQ
                 </a>
+              </li>
+              <li>
+                <Button
+                  onClick={() => {
+                    document.cookie = `uidTokenBinarApp=; expires=Thu, 01 Jan 1970 00:00:00 UTC`
+                    return navigate("/signin");
+                  }}
+                  className="btn btn-primary btn-block w-100"
+                >
+                  Log Out
+                </Button>
               </li>
               <Link to="/sign-up">
                 <Button className="btnRegister" variant="success">

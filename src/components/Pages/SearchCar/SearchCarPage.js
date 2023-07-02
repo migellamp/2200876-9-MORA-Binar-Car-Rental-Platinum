@@ -18,10 +18,17 @@ import BannerSearch from "../../PageComponent/BannerSearc";
 import Footer from "../../PageComponent/Footer/index";
 import { useContext } from "react";
 import { SearchedCarContext } from "../../context/searchedCar";
+import { Navigate } from "react-router-dom";
 
 export const SearchFrame = ({ topNumber }) => {
   // const navigate = useNavigate();
+  const role = localStorage.getItem('role')
 
+  if (document.cookie === "" ) {
+    return <Navigate to="/signin" />;
+  } else if (role === "Admin") {
+    return <Navigate to="/signin" />;
+  }
   const { searchedCar } = useContext(SearchedCarContext);
   const { namaMobil, kategori, harga, status } = searchedCar || {};
   // const [inputForm, setInputForm] = useState("");
