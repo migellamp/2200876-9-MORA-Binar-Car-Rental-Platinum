@@ -17,6 +17,7 @@ import ModalImage from "react-modal-image";
 import axios from "axios";
 import { useMemo } from "react";
 import dayjs from "dayjs";
+import TicketPage from "./tiket";
 
 const FinishPayment = () => {
   const [percent, setPercent] = useState(0);
@@ -267,6 +268,10 @@ const FinishPayment = () => {
       currency: "IDR",
     }).format(value);
 
+  const [a, setA] = useState(false);
+  const handleTicket = () => {
+    setA(true);
+  };
   const getCarList = async () => {
     const requestOptions = {
       headers: {
@@ -296,8 +301,10 @@ const FinishPayment = () => {
   const dayCount = days + 1;
 
   const harga = carId.price * dayCount;
+
   if (isBackPayment === true) return <PaymentPage></PaymentPage>;
-  if (isUpload === true) return <PaymentPage></PaymentPage>;
+  if (a === true) return <TicketPage></TicketPage>;
+
   return (
     <div>
       <Navbar />
@@ -723,6 +730,15 @@ const FinishPayment = () => {
           Kembali ke halaman seebelumnya dan lakukan pembayaran ulang!
         </Modal.Body>
       </Modal>
+
+      {isUpload && (
+        <Modal show={true} onHide={handleTicket}>
+          <Modal.Header closeButton>
+            <Modal.Title>Pembayaran Berhasil Dikonfirmasi</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Terima kasih sudah melakukan pemesanan!</Modal.Body>
+        </Modal>
+      )}
       <Footer />
     </div>
   );
