@@ -15,15 +15,14 @@ const LandingPage = () => {
   //     <button class="sewa-button">Mulai Sewa Mobil</button>
   // `
 
-  const role = localStorage.getItem('role')
+  const role = localStorage.getItem("role");
 
-  if (document.cookie === "" ) {
-    return <Navigate to="/signin" />;
-  } else if (role === "Admin") {
-    return <Navigate to="/signin" />;
+  // if (document.cookie === "") {s
+  //   return <Navigate to="/signin" />
+
+  if (role === "Admin") {
+    return <Navigate to="admin/dashboard/" />;
   }
-  
-  
   return (
     <>
       <Navbar />

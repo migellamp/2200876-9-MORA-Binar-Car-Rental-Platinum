@@ -1,31 +1,31 @@
-import React, { createContext, useState } from 'react'
-import { node } from 'prop-types'
-import useGetUsers from '../../hooks/useGetUsers'
+import React, { createContext, useState } from "react";
+import { node } from "prop-types";
+import useGetUsers from "../../hooks/useGetUsers";
 
-export const UserContext = createContext(null)
+export const UserContext = createContext(null);
 // Provider =>
 const UserProvider = ({ children }) => {
   // custom hooks
-  const { data: dataUser, loading, error } = useGetUsers()
-  const [showCard, setShowCard] = useState(false)
+  const { data: dataUser, loading, error } = useGetUsers();
+  const [showCard, setShowCard] = useState(false);
 
   const userObj = {
     dataUser: dataUser?.data,
     loading,
     error,
     setShowCard,
-    showCard
-  }
+    showCard,
+  };
 
   return (
     <UserContext.Provider value={userObj}>{children}</UserContext.Provider>
-  )
-}
+  );
+};
 
 UserProvider.propTypes = {
-  children: node.isRequired
-}
+  children: node.isRequired,
+};
 
-export default UserProvider
+export default UserProvider;
 
 // Consumer

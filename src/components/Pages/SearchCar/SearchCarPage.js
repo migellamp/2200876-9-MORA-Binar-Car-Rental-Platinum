@@ -22,12 +22,12 @@ import { Navigate } from "react-router-dom";
 
 export const SearchFrame = ({ topNumber }) => {
   // const navigate = useNavigate();
-  const role = localStorage.getItem('role')
+  const role = localStorage.getItem("role");
 
-  if (document.cookie === "" ) {
-    return <Navigate to="/signin" />;
+  if (document.cookie === "") {
+    return <Navigate to="/sign-in" />;
   } else if (role === "Admin") {
-    return <Navigate to="/signin" />;
+    return <Navigate to="/sign-in" />;
   }
   const { searchedCar } = useContext(SearchedCarContext);
   const { namaMobil, kategori, harga, status } = searchedCar || {};

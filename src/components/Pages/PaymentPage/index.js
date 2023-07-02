@@ -15,12 +15,12 @@ import { Navigate } from "react-router-dom";
 import dayjs from "dayjs";
 
 const PaymentPage = () => {
-  const role = localStorage.getItem('role')
+  const role = localStorage.getItem("role");
 
-  if (document.cookie === "" ) {
-    return <Navigate to="/signin" />;
+  if (document.cookie === "") {
+    return <Navigate to="/sign-in" />;
   } else if (role === "Admin") {
-    return <Navigate to="/signin" />;
+    return <Navigate to="/sign-in" />;
   }
   const styles = {
     size14medium: {
