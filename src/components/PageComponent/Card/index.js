@@ -1,4 +1,3 @@
-
 import * as React from "react";
 
 const Card = ({ image, desc, person }) => {
@@ -21,7 +20,7 @@ const Card = ({ image, desc, person }) => {
           <span className="fa fa-star checked"></span>
           <span className="fa fa-star checked"></span>
         </div>
-        <h6 className="card-title">"{desc}"</h6>
+        <h6 className="card-title">{desc}</h6>
         <p className="card-text">{person}</p>
       </div>
     </div>
