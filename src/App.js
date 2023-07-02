@@ -6,6 +6,7 @@ import CarDetails from "./components/Pages/CarDetailsPage";
 import PaymentPage from "./components/Pages/PaymentPage";
 import SignUp from "./components/Pages/SignUpPage";
 import React from "react";
+import DashboardAdmin from "./components/Pages/DashboardAdmin";
 // import { getCarList } from "./API/api";
 // import { useState } from "react";
 // import { useEffect } from "react";
@@ -21,7 +22,7 @@ const App = () => {
         <Route exact path="/car-details" element={<CarDetails />} />
         <Route exact path="/payments" element={<PaymentPage />} />
         <Route exact path="/" element={<LandingPage />} />
-        <Route />
+        <Route exact path="/admin/dashboard" element={<DashboardAdmin />} />
       </Routes>
     </Router>
   );
