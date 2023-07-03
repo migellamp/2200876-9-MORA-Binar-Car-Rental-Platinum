@@ -36,7 +36,15 @@ function CarData({ description, data, onClickDelete, onClickEdit }) {
                   }}
                 />
               </div>
-              <h6 className="text-list">{data.category}</h6>
+              <h6 className="text-list">
+                {data.category == "small"
+                  ? "2 - 4 Orang"
+                  : data.category == "medium"
+                  ? "4 - 6 Orang"
+                  : data.category == "large"
+                  ? "6 - 8 Orang"
+                  : data.category}
+              </h6>
             </div>
             <div className="d-flex">
               <div style={{ justifyContent: "center" }}>

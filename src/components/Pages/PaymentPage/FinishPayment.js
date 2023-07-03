@@ -8,10 +8,34 @@ import Countdown from "react-countdown";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { Alert, Fade } from "react-bootstrap";
 import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
+import { FileUploader } from "react-drag-drop-files";
+import storage from "../../../firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import ModalImage from "react-modal-image";
+import axios from "axios";
+import { useMemo } from "react";
+import dayjs from "dayjs";
+import TicketPage from "./tiket";
+import { Navigate } from "react-router-dom";
+import { Cookies } from "react-cookie";
 
 const FinishPayment = () => {
+  const cookies = new Cookies();
+  const token = cookies.get("uidTokenBinarApp");
+  const role = localStorage.getItem("role");
+
+  if (document.cookie.includes("uidTokenBinarApp") === false) {
+    return <Navigate to="/sign-in" />;
+  } else if (role === "Admin") {
+    return <Navigate to="/sign-in" />;
+  }
+  const [percent, setPercent] = useState(0);
+  const [isUpload, setUpload] = useState(false);
+  const [carId, setCarId] = useState({});
+  const [orderId, setOrderId] = useState({});
+  const [imgData, setImgData] = useState(null);
   const [copied, setCopied] = useState(false);
   const [copied1, setCopied1] = useState(false);
   const [payInstuction, setPayInstuction] = useState("1");
@@ -21,9 +45,28 @@ const FinishPayment = () => {
   const selectedPaymen = JSON.parse(selectedPaymentMethod);
   const [payment] = useState(selectedPaymen);
   const [isBackPayment, setIsBackPayment] = useState(false);
-  const harga = 8000000;
   const dateNow = useRef(Date.now());
   const [show, setShow] = useState(false);
+  const fileTypes = ["JPG", "PNG", "GIF"];
+  const [file, setFile] = useState(null);
+  const reader = new FileReader();
+  // buat save url firebase
+
+  function useQuery() {
+    const { search } = useLocation();
+    return useMemo(() => new URLSearchParams(search), [search]);
+  }
+
+  let query = useQuery();
+  const id = query.get("orderId");
+
+  reader.onload = (e) => {
+    setImgData(e.target.result);
+  };
+  const handleChange = (file) => {
+    reader.readAsDataURL(file);
+    setFile(file);
+  };
 
   let navigate = useNavigate();
   const styles = {
@@ -159,6 +202,52 @@ const FinishPayment = () => {
     }
   };
 
+  const handleUpload = async () => {
+    if (!file) {
+      alert("Please choose a file first!");
+    }
+    const storageRef = ref(storage, `/files/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const percent = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+
+        // update progress
+        setPercent(percent);
+        console.log(percent);
+      },
+      (err) => console.log(err),
+      () => {
+        // download url
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          putPaymentSlip(url);
+        });
+      }
+    );
+  };
+  const putPaymentSlip = async () => {
+    const requestOptions = {
+      headers: {
+        accept: "application/json",
+        "Content-Type": "multipart/form-data",
+        access_token: token,
+      },
+    };
+    const put = await axios.put(
+      `${process.env.REACT_APP_BASEURL}/customer/order/5361/slip`,
+      { slip: file },
+      requestOptions
+    );
+    if (put.data.slip != null) {
+      setUpload(true);
+    }
+    console.log(put.data.slip);
+    // navigate(`/payments?orderId=${post.data.id}`);
+  };
+
   const handleAlert = () => {
     setCopied((prev) => !prev);
     setTimeout(() => {
@@ -189,7 +278,44 @@ const FinishPayment = () => {
       currency: "IDR",
     }).format(value);
 
+  const [a, setA] = useState(false);
+  const handleTicket = () => {
+    setA(true);
+  };
+  const getCarList = async () => {
+    const requestOptions = {
+      headers: {
+        "Content-Type": "application/json",
+        access_token:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGJjci5pbyIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTY2NTI0MjUwOX0.ZTx8L1MqJ4Az8KzoeYU2S614EQPnqk6Owv03PUSnkzc",
+      },
+    };
+    const cars = await axios.get(
+      `${process.env.REACT_APP_BASEURL}/customer/order/${id}`,
+      requestOptions
+    );
+    setCarId(cars.data.Car);
+    setOrderId(cars.data);
+  };
+
+  React.useEffect(() => {
+    getCarList();
+    console.log(percent);
+    // eslint-disable-next-line
+  }, []);
+
+  const total_seconds =
+    dayjs(orderId.finish_rent_at).unix() - dayjs(orderId.start_rent_at).unix();
+  const total_minutes = parseInt(Math.floor(total_seconds / 60));
+  const total_hours = parseInt(Math.floor(total_minutes / 60));
+  const days = parseInt(Math.floor(total_hours / 24));
+  const dayCount = days + 1;
+
+  const harga = carId.price * dayCount;
+
   if (isBackPayment === true) return <PaymentPage></PaymentPage>;
+  if (a === true) return <TicketPage></TicketPage>;
+
   return (
     <div>
       <Navbar />
@@ -236,7 +362,7 @@ const FinishPayment = () => {
         <div className="container-payment">
           <div className="cover-payment">
             <div className="container-back-button order-id">
-              <h5 style={styles.size12}>Order ID : xxxx..</h5>
+              <h5 style={styles.size12}>Order ID : {id}</h5>
             </div>
           </div>
         </div>
@@ -250,7 +376,10 @@ const FinishPayment = () => {
                   <h6 style={styles.size14bold}>
                     Selesaikan Pembayaran Sebelum
                   </h6>
-                  <h5 style={styles.size14}>Rabu, 19 Mei 2022 jam 13.00 WIB</h5>
+                  <h5 style={styles.size14}>
+                    {dayjs(dateNow.current).format("dddd, DD MMMM YYYY")} jam{" "}
+                    {dayjs(dateNow.current).format("HH:mm")} WIB
+                  </h5>
                 </div>
                 <div className="righ-item">
                   <Countdown
@@ -561,7 +690,7 @@ const FinishPayment = () => {
                     </div>
                     <div className="righ-item">
                       <Countdown
-                        date={dateConfirm + 599000}
+                        date={dateConfirm + 590000}
                         renderer={rendererConfirm}
                       />
                     </div>
@@ -578,9 +707,29 @@ const FinishPayment = () => {
                     Untuk membantu kami lebih cepat melakukan pengecekan. Kamu
                     bisa upload bukti bayarmu
                   </h6>
-                  <button className="sewa-button confirm-button mt-2">
+                  <FileUploader
+                    handleChange={handleChange}
+                    name="file"
+                    types={fileTypes}
+                  />
+                  {imgData != null && (
+                    <>
+                      <h5 style={styles.size14bold} className="mt-2">
+                        Preview :{" "}
+                      </h5>
+                      <div className="image-preview">
+                        <ModalImage small={imgData} large={imgData} />
+                      </div>
+                    </>
+                  )}
+
+                  <button
+                    className="sewa-button confirm-button mt-4"
+                    onClick={handleUpload}
+                  >
                     Upload
                   </button>
+                  {/* {url && <img src={url} alt="" />} */}
                 </div>
               ) : null}
             </div>
@@ -596,6 +745,15 @@ const FinishPayment = () => {
           Kembali ke halaman seebelumnya dan lakukan pembayaran ulang!
         </Modal.Body>
       </Modal>
+
+      {isUpload && (
+        <Modal show={true} onHide={handleTicket}>
+          <Modal.Header closeButton>
+            <Modal.Title>Pembayaran Berhasil Dikonfirmasi</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Terima kasih sudah melakukan pemesanan!</Modal.Body>
+        </Modal>
+      )}
       <Footer />
     </div>
   );

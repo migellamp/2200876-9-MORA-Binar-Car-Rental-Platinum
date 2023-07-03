@@ -84,7 +84,7 @@ const SearchFrameSolo = ({ name, carStatus, price, category }) => {
 
   const CallApi = async (url) => {
     setLoading(true);
-    const cars = await await axios.get(url);
+    const cars = await axios.get(url);
     setState(cars.data.cars);
     enableAll();
     handleButtonOnClick();

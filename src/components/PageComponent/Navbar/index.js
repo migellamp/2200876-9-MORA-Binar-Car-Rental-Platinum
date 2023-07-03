@@ -1,16 +1,17 @@
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import "./style.css";
 import CloseIcon from "../../../image/icon-close.png";
 import * as React from "react";
+import { Button } from "react-bootstrap";
 
 const Navbar = () => {
-  const [sidebar, setSidebar] = useState(false);
+  const [sidebar, setSidebar] = React.useState(false);
   const showSidebar = () => {
     setSidebar((prev) => !prev);
     console.log(sidebar);
   };
   const navigate = useNavigate();
+
   return (
     <>
       <div className="container-navbar">
@@ -72,6 +73,24 @@ const Navbar = () => {
                       FAQ
                     </a>
                   </li>
+                  <li>
+                    <Button
+                      onClick={() => {
+                        document.cookie = `uidTokenBinarApp=; expires=Thu, 01 Jan 1970 00:00:00 UTC`;
+                        return navigate("/sign-in");
+                      }}
+                      className="btn btn-primary btn-block w-100"
+                    >
+                      Log Out
+                    </Button>
+                  </li>
+                  <li className="nav-item sidebar-funct">
+                    <Link to="/sign-up">
+                      <Button className="btnRegister" variant="success">
+                        Register
+                      </Button>
+                    </Link>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -100,6 +119,25 @@ const Navbar = () => {
                 <a className="nav-link" href="/#faqSection">
                   FAQ
                 </a>
+              </li>
+              <li>
+                {document.cookie.includes("uidTokenBinarApp") ? (
+                  <Button
+                    onClick={() => {
+                      document.cookie = `uidTokenBinarApp=; expires=Thu, 01 Jan 1970 00:00:00 UTC`;
+                      return navigate("/");
+                    }}
+                    className="btn btn-primary btn-block w-100"
+                  >
+                    Log Out
+                  </Button>
+                ) : (
+                  <Link to="/sign-up">
+                    <Button className="btnRegister" variant="success">
+                      Register
+                    </Button>
+                  </Link>
+                )}
               </li>
             </ul>
           </div>

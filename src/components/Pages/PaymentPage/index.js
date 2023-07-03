@@ -11,8 +11,21 @@ import axios from "axios";
 import { useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { Navigate } from "react-router-dom";
+import dayjs from "dayjs";
+import { Cookies } from "react-cookie";
 
 const PaymentPage = () => {
+  const cookies = new Cookies();
+  const token = cookies.get("uidTokenBinarApp");
+
+  const role = localStorage.getItem("role");
+
+  if (document.cookie.includes("uidTokenBinarApp") === false) {
+    return <Navigate to="/sign-in" />;
+  } else if (role === "Admin") {
+    return <Navigate to="/sign-in" />;
+  }
   const styles = {
     size14medium: {
       fontFamily: "Arial",
@@ -67,20 +80,42 @@ const PaymentPage = () => {
   const [payment, setPayment] = useState(selectedPayment);
   const [isPayExpand, setPayExpand] = useState(true);
   const [isFinishPayment, setFinishPayment] = useState(false);
+  const [orderId, setOrderId] = useState({});
   const [carId, setCarId] = useState({});
+
   const { name, category } = carId || {};
   function useQuery() {
     const { search } = useLocation();
     return useMemo(() => new URLSearchParams(search), [search]);
   }
+
+  let newCategory;
+  if (carId.category === "small" || carId.category === "Small") {
+    newCategory = "2 - 4 orang";
+  } else if (carId.category === "medium" || carId.category === "Medium") {
+    newCategory = "4 - 6 orang";
+  } else if (carId.category === "large" || carId.category === "Large") {
+    newCategory = "6 - 8 orang";
+  }
+
   let query = useQuery();
-  const id = query.get("idCar");
-  const harga = 100000;
+  const id = query.get("orderId");
+  const harga = carId.price;
+
   const getCarList = async () => {
-    const cars = await await axios.get(
-      `${process.env.REACT_APP_BASEURL}/customer/car/${id}`
+    const requestOptions = {
+      headers: {
+        "Content-Type": "application/json",
+        access_token: token,
+      },
+    };
+    const cars = await axios.get(
+      `${process.env.REACT_APP_BASEURL}/customer/order/${id}`,
+      requestOptions
     );
-    setCarId(cars.data);
+    setOrderId(cars.data);
+    setCarId(cars.data.Car);
+    console.log(cars.data);
   };
 
   useEffect(() => {
@@ -89,7 +124,12 @@ const PaymentPage = () => {
   }, []);
 
   // set item count sementara
-  const dayCount = 7;
+  const total_seconds =
+    dayjs(orderId.finish_rent_at).unix() - dayjs(orderId.start_rent_at).unix();
+  const total_minutes = parseInt(Math.floor(total_seconds / 60));
+  const total_hours = parseInt(Math.floor(total_minutes / 60));
+  const days = parseInt(Math.floor(total_hours / 24));
+  const dayCount = days + 1;
 
   const expandPaymentHandler = () => {
     setPayExpand((val) => !val);
@@ -165,19 +205,23 @@ const PaymentPage = () => {
           <div className="payment-form-wrapper wrapper-payment-header">
             <div className="payment-head-item payment-car">
               <h5 style={styles.size14medium}>Nama/Tipe Mobil</h5>
-              <h5 style={styles.size14}>{name}</h5>
+              <h5 style={styles.size14}>{carId.name}</h5>
             </div>
             <div className="payment-head-item payment-category">
               <h5 style={styles.size14medium}>Kategori</h5>
-              <h5 style={styles.size14}>{category}</h5>
+              <h5 style={styles.size14}>{newCategory}</h5>
             </div>
             <div className="payment-head-item payment-start">
               <h5 style={styles.size14medium}>Tanggal Mulai Sewa</h5>
-              <h5 style={styles.size14}>belom</h5>
+              <h5 style={styles.size14}>
+                {dayjs(orderId.start_rent_at).format("DD MMMM YYYY")}
+              </h5>
             </div>
             <div className="payment-head-item payment-end">
               <h5 style={styles.size14medium}>Tanggal Akhir Sewa</h5>
-              <h5 style={styles.size14}>belom</h5>
+              <h5 style={styles.size14}>
+                {dayjs(orderId.finish_rent_at).format("DD MMMM YYYY")}
+              </h5>
             </div>
           </div>
         </div>
@@ -408,15 +452,6 @@ const PaymentPage = () => {
       </div>
       <div className="barrier"></div>
       <Footer />
-      {/* {
-                carId.map((value)=>{
-                    return (       
-                        <>
-                        <h1>{value.name}</h1>
-                        </>
-                    )
-                })
-            } */}
     </>
   );
 };

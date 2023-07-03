@@ -17,7 +17,7 @@
     border-radius: 8px;
     padding: 20px;
     width: 405px;
-    height: 435px;
+    /* height: 435px; */
 }
 .wrapper-description-car{
     background: #FFFFFF;
@@ -76,6 +76,43 @@
 }
 .wrapper-form-car-details select{
     color: #8A8A8A !important;
+}
+
+.open-calender{
+    margin-left: 0;
+    box-shadow: 0px 4px 12px 0px #0000001A;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background-color: white;
+    padding: 20px;
+}
+.rdp {
+    --rdp-cell-size: 40px;
+    --rdp-accent-color: #35B0A7;
+    --rdp-background-color: #e7edff;
+    --rdp-accent-color-dark: #35B0A7;
+    --rdp-background-color-dark: #35B0A7;
+    --rdp-outline: 2px solid var(--rdp-accent-color);
+    --rdp-outline-selected: 2px solid rgba(0, 0, 0, 0.75);
+  }
+
+.rdp-day_selected{
+    background-color: #35B0A7 !important;
+}
+.showInputDateForm{
+    border-radius: 2px;
+    border: 1px solid var(--primary-lime-green-04, #009C96);
+    background: var(--neutral-01, #FFF);
+    width: 358px;
+    text-align: left;
+    height: 36px;
+    color: #999999;
+    padding-left: 12px;
+}
+
+.wrapper-info-car{
+    height: 465px;
 }
 
 @media screen and (max-width:1000px){

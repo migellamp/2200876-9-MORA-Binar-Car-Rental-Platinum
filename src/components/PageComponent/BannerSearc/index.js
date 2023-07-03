@@ -1,6 +1,6 @@
-import * as React from "react";
-import "./style.css";
 import carImage from "../../../image/img_car.png";
+import React from "react";
+import "./style.css";
 
 const BannerSearch = () => {
   return (

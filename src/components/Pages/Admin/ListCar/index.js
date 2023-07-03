@@ -1,24 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CarData from "../../../PageComponent/Admin/CarData";
 
 import FilterListCar from "../../../PageComponent/Admin/FilterListCar";
 import axios from "axios";
 import Modals from "../../../PageComponent/Admin/Modal";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../../../PageComponent/Admin/Button";
+import { Cookies } from "react-cookie";
+// import Navbar from "../../../PageComponent/Admin/Navbar";
+import { messageContext } from "../../../context/mesage";
+import Navbar from "../../../PageComponent/Admin/Navbar";
+// import Navbar from "../../../PageComponent/Admin/Navbar";
 
 export default function ListCar() {
+  const cookies = new Cookies();
+  const { message, showMessage, setMessageHandling } =
+    useContext(messageContext);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const [modalShow, setModalShow] = React.useState(false);
   const [idDelete, setIdDelete] = useState("");
+  const token = cookies.get("uidTokenBinarApp");
+  const location = useLocation();
 
   useEffect(() => {
+    if (!token) navigate("/admin");
     axios
       .get(`${process.env.REACT_APP_BASEURL}/admin/v2/car?page=1&pageSize=12`, {
         headers: {
-          access_token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGJjci5pbyIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTY4ODMyNDAwM30.sFzg7xHrzQr7jx8n3vGvRcHe-5MxZGUEYOgeWlkQFZY",
+          access_token: token,
         },
       })
       .then((res) => {
@@ -28,7 +38,7 @@ export default function ListCar() {
       .catch((err) => {
         console.log("err ", err);
       });
-  }, [modalShow]);
+  }, [modalShow, location.key]);
 
   const showModalHandling = (id) => {
     setModalShow(true);
@@ -39,12 +49,12 @@ export default function ListCar() {
     axios
       .delete(`${process.env.REACT_APP_BASEURL}/admin/car/${idDelete}`, {
         headers: {
-          access_token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGJjci5pbyIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTY4ODMyNDAwM30.sFzg7xHrzQr7jx8n3vGvRcHe-5MxZGUEYOgeWlkQFZY",
+          access_token: token,
         },
       })
       .then((res) => {
         console.log({ res });
+        setMessageHandling("berhasil Delete data");
         setModalShow(false);
       })
       .catch((err) => {
@@ -62,8 +72,7 @@ export default function ListCar() {
     axios
       .get(url, {
         headers: {
-          access_token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGJjci5pbyIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTY4ODMyNDAwM30.sFzg7xHrzQr7jx8n3vGvRcHe-5MxZGUEYOgeWlkQFZY",
+          access_token: token,
         },
       })
       .then((res) => {
@@ -76,10 +85,7 @@ export default function ListCar() {
   };
 
   return (
-    <div>
-      {/* <Button variant="primary" onClick={() => setModalShow(true)}>
-        Launch vertically centered modal
-      </Button> */}
+    <Navbar>
       <Modals
         deleteHandling={deleteHandling}
         onClickCancel={() => setModalShow(false)}
@@ -87,8 +93,14 @@ export default function ListCar() {
         idDelete={idDelete}
         onHide={() => setModalShow(false)}
       />
-      <div className="container">
-        <div className="px-2">
+
+      <div className="content-wrapper  px-5">
+        <div className="px-2  ">
+          {showMessage == true && (
+            <div className="alert alert-primary text-center" role="alert">
+              {message}
+            </div>
+          )}
           <p>
             <span className="text-bold">Cars &gt;</span> List Car
           </p>
@@ -102,6 +114,7 @@ export default function ListCar() {
             title="+ Add New Car"
           />
         </div>
+
         <div className="row">
           {data.map((res) => {
             return (
@@ -115,6 +128,6 @@ export default function ListCar() {
           })}
         </div>
       </div>
-    </div>
+    </Navbar>
   );
 }
