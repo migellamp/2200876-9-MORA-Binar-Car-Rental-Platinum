@@ -301,38 +301,35 @@
     flex-direction: row;
     justify-content: space-between;
 }
-.guZdik{
+/* .guZdik{
     height: 162px !important;
     background-color:  rgb(238, 238, 238) !important;
     border: 1px dashed rgb(195, 195, 195) !important;
     text-decoration: none !important;
     flex-direction: column !important;
-}
+} */
 
-.guZdik svg path{
+/* .guZdik svg path{
     fill: black !important;
-}
+} */
 
-.guZdik svg{
+/* .guZdik svg{
     margin-top: 55px;
 }
 
 .guZdik span{
     color:  rgb(238, 238, 238) !important
-}
+} */
 
-.image-preview{
+/* .image-preview{
     position: absolute;
     top: 470px;
     left: 1112px;
-}
+} */
 
-.image-preview img{
-    height: 162px;
-    width: 210px;
-    object-fit:fill !important;
-    object-position: top !important;
-}
+/* .image-preview img{
+
+} */
 
 .ticket-logo{
     text-align: center;

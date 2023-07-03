@@ -13,8 +13,12 @@ import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import dayjs from "dayjs";
+import { Cookies } from "react-cookie";
 
 const PaymentPage = () => {
+  const cookies = new Cookies();
+  const token = cookies.get("uidTokenBinarApp");
+
   const role = localStorage.getItem("role");
 
   if (document.cookie.includes("uidTokenBinarApp") === false) {
@@ -102,8 +106,7 @@ const PaymentPage = () => {
     const requestOptions = {
       headers: {
         "Content-Type": "application/json",
-        access_token:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGJjci5pbyIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTY2NTI0MjUwOX0.ZTx8L1MqJ4Az8KzoeYU2S614EQPnqk6Owv03PUSnkzc",
+        access_token: token,
       },
     };
     const cars = await axios.get(

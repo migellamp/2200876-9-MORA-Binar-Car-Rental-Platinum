@@ -19,8 +19,11 @@ import { useMemo } from "react";
 import dayjs from "dayjs";
 import TicketPage from "./tiket";
 import { Navigate } from "react-router-dom";
+import { Cookies } from "react-cookie";
 
 const FinishPayment = () => {
+  const cookies = new Cookies();
+  const token = cookies.get("uidTokenBinarApp");
   const role = localStorage.getItem("role");
 
   if (document.cookie.includes("uidTokenBinarApp") === false) {
@@ -230,8 +233,7 @@ const FinishPayment = () => {
       headers: {
         accept: "application/json",
         "Content-Type": "multipart/form-data",
-        access_token:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImN1c3RvbWVyQGJjci5pbyIsInJvbGUiOiJDdXN0b21lciIsImlhdCI6MTY4ODI0Njg1MX0.HeU04pmfiaiRIXaCxNz5tWo_GQH1Ry6VON52njAwhxA",
+        access_token: token,
       },
     };
     const put = await axios.put(
@@ -298,6 +300,7 @@ const FinishPayment = () => {
 
   React.useEffect(() => {
     getCarList();
+    console.log(percent);
     // eslint-disable-next-line
   }, []);
 
@@ -710,18 +713,22 @@ const FinishPayment = () => {
                     types={fileTypes}
                   />
                   {imgData != null && (
-                    <div className="image-preview">
-                      <ModalImage small={imgData} large={imgData} />
-                    </div>
+                    <>
+                      <h5 style={styles.size14bold} className="mt-2">
+                        Preview :{" "}
+                      </h5>
+                      <div className="image-preview">
+                        <ModalImage small={imgData} large={imgData} />
+                      </div>
+                    </>
                   )}
 
                   <button
-                    className="sewa-button confirm-button mt-2"
+                    className="sewa-button confirm-button mt-4"
                     onClick={handleUpload}
                   >
                     Upload
                   </button>
-                  <p>{percent}% done</p>
                   {/* {url && <img src={url} alt="" />} */}
                 </div>
               ) : null}

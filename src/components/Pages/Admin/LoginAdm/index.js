@@ -16,9 +16,12 @@ const LoginAdm = () => {
     console.log("Login successful!");
   };
 
-  const role = localStorage.getItem("role");
+  if (document.cookie.includes("uidTokenBinarApp") === true)
+    return <Navigate to={"/admin/dashboard"} />;
 
-  if (role == "Admin") return <Navigate to="/admin/dashboard"></Navigate>;
+  // const role = localStorage.getItem("role");
+
+  // if (role == "Admin") return <Navigate to="/admin/dashboard"></Navigate>;
 
   return (
     <div className="d-flex">

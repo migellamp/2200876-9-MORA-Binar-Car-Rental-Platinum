@@ -20,8 +20,11 @@ import { DayPicker } from "react-day-picker";
 import * as dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
+import { Cookies } from "react-cookie";
 
 const CarDetails = () => {
+  const cookies = new Cookies();
+  const token = cookies.get("uidTokenBinarApp");
   const navigate = useNavigate();
   const role = localStorage.getItem("role");
 
@@ -77,8 +80,7 @@ const CarDetails = () => {
     const requestOptions = {
       headers: {
         "Content-Type": "application/json",
-        access_token:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGJjci5pbyIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTY2NTI0MjUwOX0.ZTx8L1MqJ4Az8KzoeYU2S614EQPnqk6Owv03PUSnkzc",
+        access_token: token,
       },
     };
     const post = await axios.post(

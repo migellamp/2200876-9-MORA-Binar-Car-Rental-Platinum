@@ -1,0 +1,109 @@
+.calender-admin{
+    z-index: 1;
+}
+
+.buttonMonth{
+    border: 1px solid #D0D0D0;
+    background-color: white;
+    font-size: 12px;
+    padding-top: 9px ;
+    padding-left: 12px ;
+    height: 36px;
+}
+
+.button-go{
+    border: none;
+    background-color: #0D28A6;
+    height: 36px;
+    color: white;
+    text-align: center;
+}
+
+.button-go h5{
+    margin-top: 5px;
+}
+
+.button-container-month{
+    display: flex;
+    flex-direction: row;
+}
+.calender-admin{
+    padding: 20px;
+}
+
+.kotak{
+    background-color: #0D28A6;
+    width: 10px;
+    height: 24px;
+    color: #0D28A6;
+}
+.title-visual h4{
+    font-size: 14px;
+    font-family: Arial;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px;
+
+}
+
+.title-visual{
+    display: flex;
+    flex-direction: row;
+    align-items: ctop;
+}
+.buttonMonth{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 180px;
+}
+
+.buttonMonth i{
+    margin-top: 2px;
+    margin-left: 15px;
+    color: rgb(82, 82, 82);
+    padding-right: 5px;
+}
+
+.buttonMonth{
+    width: 220px;
+}
+.chart-title{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+
+.chart-title h6{
+    writing-mode: vertical-lr;
+    transform: scale(-1, -1);
+    /* text-orientation: mixed; */
+}
+.title-header-admin{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.Chart{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.paging-admin{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.paging-admin button{
+    background-color: white;
+    border-radius: 2px;
+    border: 1px solid var(--neutral-02, #D0D0D0);
+    background: var(--neutral-01, #FFF);
+}
+
+.sort{
+    background-color: white;
+    border: none;
+}
