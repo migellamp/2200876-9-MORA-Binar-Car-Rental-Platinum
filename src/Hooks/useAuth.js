@@ -23,7 +23,7 @@ const useAuth = () => {
         setLoading(false);
         if (result.access_token) {
           const accessToken = result.access_token;
-          document.cookie = `uidTokenBinarApp=${accessToken};max-age=600`;
+          document.cookie = `uidTokenBinarApp=${accessToken};max-age=1000000`;
           localStorage.setItem("role", result.role);
         }
       })

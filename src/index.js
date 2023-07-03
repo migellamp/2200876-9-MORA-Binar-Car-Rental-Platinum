@@ -7,6 +7,7 @@ import SelectPaymentProvider from "./components/context/paymentMethod";
 import AuthProvider from "./components/context/auth";
 import AuthProviderRegister from "./components/context/authRegister";
 import { CookiesProvider } from "react-cookie";
+import MessageProvider from "./components/context/mesage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -16,7 +17,9 @@ root.render(
         <SearchedCarProvider>
           <SelectPaymentProvider>
             <CookiesProvider>
-              <App />
+              <MessageProvider>
+                <App />
+              </MessageProvider>
             </CookiesProvider>
           </SelectPaymentProvider>
         </SearchedCarProvider>

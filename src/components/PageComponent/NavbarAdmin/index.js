@@ -81,7 +81,7 @@ const NavbarAdmin = () => {
           >
             <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
               <li className="nav-item">
-                <a className="nav-link" href="/admin/dashboard">
+                <a className="nav-link" href="/admin/list-car">
                   List Car
                 </a>
               </li>
