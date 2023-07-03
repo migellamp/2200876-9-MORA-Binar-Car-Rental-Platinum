@@ -80,7 +80,6 @@ export default function AddNewCar() {
               />
             </div>
           </div>
-
           <div className="form-group row pb-3">
             <label className="col-sm-2 col-form-label">Foto</label>
             <div className="col-sm-10">
@@ -115,17 +114,6 @@ export default function AddNewCar() {
               </select>
             </div>
           </div>
-          {/* <div className="form-group row pb-3">
-          <div className="col-sm-2">Checkbox</div>
-          <div className="col-sm-10">
-            <div className="form-check">
-              <input className="form-check-input" type="checkbox" id="gridCheck1" />
-              <label className="form-check-label" for="gridCheck1">
-                Example checkbox
-              </label>
-            </div>
-          </div>
-        </div> */}
           <div className="d-flex">
             <Button
               title="Cancel"

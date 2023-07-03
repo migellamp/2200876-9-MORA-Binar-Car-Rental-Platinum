@@ -4,8 +4,8 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { Cookies } from "react-cookie";
 import { messageContext } from "../../../context/mesage";
-import NavbarAdmin from "../../../PageComponent/NavbarAdmin";
 
+import NavbarAdmin from "../../../PageComponent/NavbarAdmin";
 const categoryData = [
   { id: 1, label: "2 - 4 Orang", value: "small" },
   { id: 2, label: "4 - 6 Orang", value: "medium" },
@@ -108,7 +108,6 @@ export default function EditCar() {
               />
             </div>
           </div>
-
           <div className="form-group row  pb-4">
             <label className="col-sm-2 col-form-label">Foto</label>
             <div className="col-sm-10">
