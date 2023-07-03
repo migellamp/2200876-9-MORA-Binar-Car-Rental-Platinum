@@ -4,8 +4,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 // import axios from "axios";
 import { Cookies } from "react-cookie";
-import Navbar from "../../../PageComponent/Admin/Navbar";
+
 import { messageContext } from "../../../context/mesage";
+import NavbarAdmin from "../../../PageComponent/NavbarAdmin";
 
 export default function AddNewCar() {
   const { setMessageHandling } = useContext(messageContext);
@@ -48,11 +49,12 @@ export default function AddNewCar() {
   };
 
   return (
-    <Navbar>
-      <div className="content-wrapper px-3 bg-white">
+    <>
+      <NavbarAdmin />
+      <div className="container px-3 bg-white py-3">
         <h3>Add New Car</h3>
         <form>
-          <div className="form-group row">
+          <div className="form-group row pb-3 ">
             <label className="col-sm-2 col-form-label">Nama</label>
             <div className="col-sm-10">
               <input
@@ -65,7 +67,7 @@ export default function AddNewCar() {
               />
             </div>
           </div>
-          <div className="form-group row">
+          <div className="form-group row pb-3">
             <label className="col-sm-2 col-form-label">Harga</label>
             <div className="col-sm-10">
               <input
@@ -78,8 +80,7 @@ export default function AddNewCar() {
               />
             </div>
           </div>
-
-          <div className="form-group row">
+          <div className="form-group row pb-3">
             <label className="col-sm-2 col-form-label">Foto</label>
             <div className="col-sm-10">
               <input
@@ -97,7 +98,7 @@ export default function AddNewCar() {
               />
             </div>
           </div>
-          <div className="form-group row">
+          <div className="form-group row pb-3">
             <label className="col-sm-2 col-form-label">Kategori</label>
             <div className="col-sm-10">
               <select
@@ -113,17 +114,6 @@ export default function AddNewCar() {
               </select>
             </div>
           </div>
-          {/* <div className="form-group row">
-          <div className="col-sm-2">Checkbox</div>
-          <div className="col-sm-10">
-            <div className="form-check">
-              <input className="form-check-input" type="checkbox" id="gridCheck1" />
-              <label className="form-check-label" for="gridCheck1">
-                Example checkbox
-              </label>
-            </div>
-          </div>
-        </div> */}
           <div className="d-flex">
             <Button
               title="Cancel"
@@ -135,6 +125,6 @@ export default function AddNewCar() {
           </div>
         </form>
       </div>
-    </Navbar>
+    </>
   );
 }

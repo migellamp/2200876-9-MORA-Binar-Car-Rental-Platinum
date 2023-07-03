@@ -4,7 +4,8 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { Cookies } from "react-cookie";
 import { messageContext } from "../../../context/mesage";
-import Navbar from "../../../PageComponent/Admin/Navbar";
+
+import NavbarAdmin from "../../../PageComponent/NavbarAdmin";
 const categoryData = [
   { id: 1, label: "2 - 4 Orang", value: "small" },
   { id: 2, label: "4 - 6 Orang", value: "medium" },
@@ -76,38 +77,38 @@ export default function EditCar() {
   };
 
   return (
-    <Navbar>
+    <>
+      <NavbarAdmin />
       <div className="content-wrapper bg-white px-4">
         <h3>Edit Car</h3>
         <form>
-          <div className="form-group row">
+          <div className="form-group row pb-4">
             <label className="col-sm-2 col-form-label">Nama</label>
-            <div className="col-sm-10">
+            <div className="col-sm-10 ">
               <input
                 value={name}
                 type="name"
-                className="form-control"
+                className="form-control  "
                 id="inputName"
                 placeholder="Isi Nama"
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
           </div>
-          <div className="form-group row">
+          <div className="form-group row  pb-4">
             <label className="col-sm-2 col-form-label">Harga</label>
             <div className="col-sm-10">
               <input
                 value={price}
                 type="price"
-                className="form-control"
+                className="form-control "
                 id="inputPrice"
                 placeholder="Isi Harga"
                 onChange={(e) => setPrice(e.target.value)}
               />
             </div>
           </div>
-
-          <div className="form-group row">
+          <div className="form-group row  pb-4">
             <label className="col-sm-2 col-form-label">Foto</label>
             <div className="col-sm-10">
               <input
@@ -126,7 +127,7 @@ export default function EditCar() {
               />
             </div>
           </div>
-          <div className="form-group row">
+          <div className="form-group row  pb-4">
             <label className="col-sm-2 col-form-label">Kategori</label>
             <div className="col-sm-10">
               <select
@@ -162,6 +163,6 @@ export default function EditCar() {
           </div>
         </form>
       </div>
-    </Navbar>
+    </>
   );
 }
