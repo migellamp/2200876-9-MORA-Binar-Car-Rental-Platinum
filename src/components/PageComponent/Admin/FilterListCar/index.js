@@ -1,19 +1,38 @@
 import React from "react";
 
-export default function FilterListCar() {
+export default function FilterListCar({ onChangeFilter }) {
+  const handlingFilter = (param) => {
+    onChangeFilter(param);
+  };
   return (
     <div className="d-flex">
-      <button type="button" className="btn  btn-outline-primary p-2 mx-2 ">
+      <button
+        onClick={() => handlingFilter()}
+        type="button"
+        className="btn  btn-outline-primary p-2 mx-2 "
+      >
         All
       </button>
-      <button type="button" className="btn btn-outline-primary p-2 mx-2 ">
-        2 - 4 People
+      <button
+        onClick={() => handlingFilter("small")}
+        type="button"
+        className="btn btn-outline-primary p-2 mx-2 "
+      >
+        2 - 4 Orang
       </button>
-      <button type="button" className="btn btn-outline-primary p-2 mx-2 ">
-        4 - 6 People
+      <button
+        onClick={() => handlingFilter("medium")}
+        type="button"
+        className="btn btn-outline-primary p-2 mx-2 "
+      >
+        4 - 6 Orang
       </button>
-      <button type="button" className="btn btn-outline-primary p-2  mx-2">
-        6 - 8 People
+      <button
+        onClick={() => handlingFilter("large")}
+        type="button"
+        className="btn btn-outline-primary p-2  mx-2"
+      >
+        6 - 8 Orang
       </button>
     </div>
   );

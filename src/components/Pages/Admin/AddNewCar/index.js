@@ -1,52 +1,63 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Button from "../../../PageComponent/Admin/Button";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+// import axios from "axios";
 
-const categoryData = [
-  { label: "2 - 4 Orang", value: "small" },
-  { label: "4 - 6 Orang", value: "medium" },
-  { label: "6 - 8 Orang", value: "large" },
-];
-
-export default function EditCar() {
-  let { id } = useParams();
-  // const [detailData, setDetailData] = useState();
+export default function AddNewCar() {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [price, setPrice] = useState();
   const [image, setImage] = useState([]);
   const [category, setCategory] = useState("");
 
-  useEffect(() => {
+  //   const refInputFile = useRef(null);
+
+  const submitNewCar = () => {
+    // const data = {
+    //   name,
+    //   price,
+    //   image: image.files,
+    //   category,
+    //   status: true,
+    // };
+    const priceConvert = parseInt(price);
+
+    const payload = new FormData();
+    payload.append("name", name);
+    payload.append("price", priceConvert);
+    payload.append("category", category);
+    payload.append("status", true);
+    payload.append("image", image.files);
     axios
-      .get(`${process.env.REACT_APP_BASEURL}/admin/car/${id}`, {
+      .post(`${process.env.REACT_APP_BASEURL}/admin/car`, payload, {
         headers: {
+          contentType: "multipart/form-data",
           access_token:
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGJjci5pbyIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTY4ODMyNDAwM30.sFzg7xHrzQr7jx8n3vGvRcHe-5MxZGUEYOgeWlkQFZY",
         },
       })
       .then((res) => {
-        console.log("res ", res);
-        setName(res.data.name);
-        setPrice(res.data.price);
-        setImage(res.data.image);
-        setCategory(res.data.category);
-        // setDetailData(res.data);
+        navigate("/admin/list-car");
+        console.log("ress ", res);
       })
       .catch((err) => {
-        console.log("err ", err);
+        console.log({ err });
       });
-  }, []);
+  };
+
+  console.log({ image });
 
   return (
     <div className="container bg-white">
-      <h3>Edit Car</h3>
+      <h3>Add New Car</h3>
       <form>
         <div className="form-group row">
           <label className="col-sm-2 col-form-label">Nama</label>
           <div className="col-sm-10">
             <input
               value={name}
+              onChange={(e) => setName(e.target.value)}
               type="name"
               className="form-control"
               id="inputName"
@@ -59,6 +70,7 @@ export default function EditCar() {
           <div className="col-sm-10">
             <input
               value={price}
+              onChange={(e) => setPrice(e.target.value)}
               type="price"
               className="form-control"
               id="inputPrice"
@@ -73,26 +85,31 @@ export default function EditCar() {
             <input
               type="file"
               accept="image/*"
-              defaultValue={image}
+              defaultValue={image.name}
               className="form-control"
               placeholder={"input"}
-              // onChange={(e) =>
-              //   setImage({
-              //     files: e.target.files[0],
-              //     name: e.target.files[0].name,
-              //   })
-              // }
+              onChange={(e) =>
+                setImage({
+                  files: e.target.files[0],
+                  name: e.target.files[0].name,
+                })
+              }
             />
           </div>
         </div>
         <div className="form-group row">
           <label className="col-sm-2 col-form-label">Kategori</label>
           <div className="col-sm-10">
-            <select className="form-select">
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="form-select"
+              aria-label="Default select example"
+            >
               <option selected>--- Pilih Kategori ----</option>
-              {categoryData.map((res) => {
-                return <option value={res.value}>{res.label}</option>;
-              })}
+              <option value="large">6 - 8 Orang</option>
+              <option value="medium">4 - 6 Orang</option>
+              <option value="small">2 - 4 Orang</option>
             </select>
           </div>
         </div>
@@ -110,7 +127,7 @@ export default function EditCar() {
         <div className="d-flex">
           <Button title="Cancel" outline />
           <div className="px-3" />
-          <Button title="Save" />
+          <Button title="Save" onClick={submitNewCar} />
         </div>
       </form>
     </div>
