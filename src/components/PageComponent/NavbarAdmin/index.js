@@ -14,7 +14,7 @@ const NavbarAdmin = () => {
 
   return (
     <>
-      <div className="container-navbar">
+      <div className="container-navbar ">
         <nav className="navbar navbar-expand-sm fixed-top navbar-light">
           <a
             className="navbar-brand navbar-judul"
@@ -53,11 +53,13 @@ const NavbarAdmin = () => {
                     </a>
                     <img onClick={showSidebar} src={CloseIcon} alt="" />
                   </li>
+
                   <li className="nav-item">
                     <a className="nav-link" href="/admin/dashboard">
                       List Car
                     </a>
                   </li>
+
                   <li>
                     <Button
                       onClick={() => {

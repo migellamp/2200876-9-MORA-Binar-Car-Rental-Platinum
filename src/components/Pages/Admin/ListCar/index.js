@@ -9,7 +9,8 @@ import Button from "../../../PageComponent/Admin/Button";
 import { Cookies } from "react-cookie";
 // import Navbar from "../../../PageComponent/Admin/Navbar";
 import { messageContext } from "../../../context/mesage";
-import Navbar from "../../../PageComponent/Admin/Navbar";
+
+import NavbarAdmin from "../../../PageComponent/NavbarAdmin";
 // import Navbar from "../../../PageComponent/Admin/Navbar";
 
 export default function ListCar() {
@@ -85,7 +86,8 @@ export default function ListCar() {
   };
 
   return (
-    <Navbar>
+    <>
+      <NavbarAdmin />
       <Modals
         deleteHandling={deleteHandling}
         onClickCancel={() => setModalShow(false)}
@@ -128,6 +130,6 @@ export default function ListCar() {
           })}
         </div>
       </div>
-    </Navbar>
+    </>
   );
 }
